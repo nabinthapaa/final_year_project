@@ -7,13 +7,13 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    colors: {
-      primary: "#34495E",
-      accent: "#F0AD4E",
-      teal: "#2ECC71",
-      text: "#ffffff",
-    },
     extend: {
+      colors: {
+        primary: "#34495E",
+        accent: "#F0AD4E",
+        teal: "#2ECC71",
+        text: "#ffffff",
+      },
       fontFamily: {
         poppins: ["Poppins", "system-ui", "sans-serif"],
       },

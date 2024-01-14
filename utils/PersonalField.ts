@@ -6,13 +6,7 @@ export const PersonalInputs = [
     placeholder: "Enter full name here...",
     required: true,
   },
-  {
-    label: "Email",
-    id: "email",
-    type: "email",
-    placeholder: "Enter Email here...",
-    required: true,
-  },
+ 
   {
     label: "Age",
     id: "age",
@@ -37,18 +31,5 @@ export const PersonalInputs = [
     placeholder: "Enter Date here",
     required: true,
   },
-  {
-    label: "Password",
-    id: "password",
-    type: "password",
-    placeholder: "Enter a strong password",
-    required: true,
-  },
-  {
-    label: "Password",
-    id: "repassword",
-    type: "password",
-    placeholder: "Enter a strong password again",
-    required: true,
-  },
+  
 ];

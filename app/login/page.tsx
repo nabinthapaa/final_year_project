@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
+import React, { FormEvent } from "react";
 
 const loginInputs = [
   {
@@ -17,11 +20,34 @@ const loginInputs = [
 ];
 
 function LoginPage() {
+  const router = useRouter();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email: string = e.currentTarget.email.value;
+    const password: string = e.currentTarget.password.value;
+    const type: string = e.currentTarget.type.value;
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        type,
+        redirect: false,
+      });
+      if (res?.error) {
+        alert("Invalid Credentials");
+        return;
+      }
+      router.replace("/dashboard");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
   return (
     <form
       className="max-w-[650px] min-w-[300px] px-10 mx-auto space-y-4 my-[30px]"
-      method="post"
-      action="/login"
+      onSubmit={handleSubmit}
     >
       {loginInputs.map((input) => (
         <>
