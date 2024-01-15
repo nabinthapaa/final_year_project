@@ -8,13 +8,13 @@ export default function DefaultNav() {
       </p>
       <nav className="list-none text-base  md:flex gap-6 pr-10">
         <li>
-          <a href="/checksymptoms">Check Symptoms</a>
+          <Link href="/checksymptoms">Check Symptoms</Link>
         </li>
         <li>
-          <a href="#">Consult Doctor</a>
+          <Link href="#">Consult Doctor</Link>
         </li>
         <li>
-          <a href="/login">Login</a>
+          <Link href="/login">Login</Link>
         </li>
       </nav>
     </div>

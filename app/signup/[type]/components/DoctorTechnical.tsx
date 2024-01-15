@@ -9,7 +9,10 @@ export function DoctorTechnical({
   updateFields,
 }: DoctorTechnicalProps) {
   return (
-    <FormWrapper title="Work Related Info">
+    <FormWrapper
+      title="Work Related Info"
+      subtitle="Please fill all the field for regtisteration"
+    >
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
         <span>Qualification</span>
         <input
@@ -50,7 +53,7 @@ export function DoctorTechnical({
         />
       </label>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
-        <span>Email</span>
+        <span>Department</span>
         <input
           id="department"
           name="department"

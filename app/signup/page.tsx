@@ -1,10 +1,15 @@
-// Load the user mode selection ui here
+"use client";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import GlassCard from "./[type]/components/GlassCard";
 
 export default function SignUP() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  if (session) router.replace("/dashboard");
   return (
     <div className="px-10 mt-[20vh] flex items-center justify-center gap-[10vh]">
       <GlassCard>

@@ -1,19 +1,29 @@
 import React from "react";
 
-export default function Prediction() {
-  const percentage = "40%";
+type PredictionProps = {
+  name: string;
+  percentage?: string;
+  diseases?: string;
+  department?: string;
+};
+
+export default function Prediction({
+  name,
+  percentage,
+  diseases,
+  department,
+}: PredictionProps) {
   return (
     <div className="mt-10 px-10">
       <div className="flex w-full justify-around border-teal border-2 rounded-xl">
-        <div className="left text-xl max-w-[600px] py-2 min-w-[300px]  font-bold text-text space-y-4 px-2">
+        <div className="left text-xl max-w-[600px] py-2 min-w-[300px] w-[600px] font-bold text-text space-y-4 px-2">
           <p>
-            Patient Name:{" "}
-            <span className="text-accent">Ram Bahadur Kunwor</span>
+            Patient Name: <span className="text-accent">{name}</span>
           </p>
           <p>
-            Predicted Disease: <span>Malaraia</span>
+            Predicted Disease: <span>{diseases}</span>
           </p>
-          <p>Department: Dermatologist</p>
+          <p>Department: {department}</p>
           <div className="relative px-2 py-2">
             <div className="absolute left-0 right-0 rounded-full bg-accent inset-0"></div>
             <div

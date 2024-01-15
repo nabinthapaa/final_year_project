@@ -1,4 +1,6 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import {
   INVALID_AGE,
@@ -14,6 +16,8 @@ const INITIAL_DATA: UserFormData = {
   firstName: "",
   lastName: "",
   age: "",
+  gender: "",
+  address: "",
   email: "",
   password: "",
   repassword: "",
@@ -35,6 +39,9 @@ function validateUser(data: UserFormData) {
 
 function UserForm() {
   const [data, setData] = useState(INITIAL_DATA);
+  const [loading, setloading] = useState(false);
+  const router = useRouter();
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <AccountForm key="account" {...data} updateFields={updateFields} />,
@@ -47,6 +54,7 @@ function UserForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLastStep) return next();
+    setloading(true);
     try {
       validateUser(data);
       try {
@@ -59,6 +67,7 @@ function UserForm() {
         });
         if (res.ok) {
           alert("Account Succesfully created");
+          router.replace("/dashboard");
         } else {
           alert("Something Went wrong");
         }
@@ -70,14 +79,33 @@ function UserForm() {
       if (error instanceof Error) {
         alert(JSON.stringify({ error: error.message }));
       }
+    } finally {
+      setloading(false);
     }
   };
   return (
-    <div className="relative border w-fit mx-auto p-6 mt-5 rounded-2xl bg-gray-600 shadow-sm">
-      <form onSubmit={handleSubmit}>
-        <div style={{ position: "absolute", top: ".5rem", right: ".5rem" }}>
-          {currentStepIndex + 1} / {steps.length}
+    <div className="relative border gap-4 w-fit  mx-auto p-6 mt-5 rounded-2xl bg-gray-600 shadow-sm grid grid-cols-[0.2fr,1fr]">
+      <div
+        className={`w-52 h-full pt-16 px-2 rounded-md shadow-gray-600  space-y-6`}
+      >
+        <div
+          className={`${
+            currentStepIndex === 0 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 1</p>
+          <p className="font-bold text-md">Your credentials</p>
         </div>
+        <div
+          className={`${
+            currentStepIndex === 1 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 2</p>
+          <p className="font-bold text-md">Your Info</p>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit}>
         {step}
         <div
           style={{
@@ -89,16 +117,18 @@ function UserForm() {
         >
           {!isFirstStep && (
             <button
-              className="bg-accent px-5 py-2 font-bold text-lg rounded-full"
+              className="bg-accent px-5 py-2 font-bold text-lg rounded-full disabled:bg-accent/30"
               type="button"
               onClick={back}
+              disabled={loading}
             >
               Back
             </button>
           )}
           <button
-            className="bg-teal px-5 py-2 font-bold text-lg rounded-full"
+            className="bg-teal px-5 py-2 font-bold text-lg rounded-full disabled:bg-teal/30"
             type="submit"
+            disabled={loading}
           >
             {isLastStep ? "Finish" : "Next"}
           </button>

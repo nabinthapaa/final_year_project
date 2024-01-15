@@ -8,7 +8,10 @@ export function AccountForm({
   updateFields,
 }: AccountFormProps) {
   return (
-    <FormWrapper title="Account Credentials">
+    <FormWrapper
+      title="Account Credentials"
+      subtitle="Please remeber these credentials for future usage"
+    >
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
         <span>Email</span>
         <input

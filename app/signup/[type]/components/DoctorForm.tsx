@@ -80,11 +80,38 @@ export default function DoctorForm() {
   }
 
   return (
-    <div className="relative border w-fit mx-auto p-6 mt-5 rounded-2xl bg-gray-600 shadow-sm">
-      <form onSubmit={onSubmit}>
-        <div style={{ position: "absolute", top: ".5rem", right: ".5rem" }}>
-          {currentStepIndex + 1} / {steps.length}
+    <div className="relative border gap-4 w-fit  mx-auto p-6 mt-5 rounded-2xl bg-gray-600 shadow-sm grid grid-cols-[0.2fr,1fr]">
+      <div
+        className={`w-52 h-full pt-16 px-2 rounded-md shadow-gray-600  space-y-6`}
+      >
+        <div
+          className={`${
+            currentStepIndex === 0
+              ? "bg-gray-50/30 border-white border shadow-custom"
+              : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 1</p>
+          <p className="font-bold text-md">Your credentials</p>
         </div>
+        <div
+          className={`${
+            currentStepIndex === 1 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 2</p>
+          <p className="font-bold text-md">Your Info</p>
+        </div>
+        <div
+          className={`${
+            currentStepIndex === 2 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 3</p>
+          <p className="font-bold text-md">Your Work Info</p>
+        </div>
+      </div>
+      <form onSubmit={onSubmit}>
         {step}
         <div
           style={{

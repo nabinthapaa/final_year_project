@@ -23,6 +23,9 @@ export type UserData = {
   firstName: string;
   lastName: string;
   age: string;
+  password: string;
+  gender: string;
+  address: string;
 };
 
 export type UserFormProps = UserData & {

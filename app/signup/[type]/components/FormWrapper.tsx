@@ -3,15 +3,19 @@ import { ReactNode } from "react";
 type FormWrapperProps = {
   title: string;
   children: ReactNode;
+  subtitle?: string;
 };
 
-export function FormWrapper({ title, children }: FormWrapperProps) {
+export function FormWrapper({ title, children, subtitle }: FormWrapperProps) {
   return (
-    <>
-      <h2 className="font-extrabold text-center text-3xl mb-3">{title}</h2>
-      <div className="grid auto-rows-auto w-[50vw] mx-auto space-y-6">
+    <div>
+      <div className="mb-3">
+        <h2 className="font-extrabold text text-3xl">{title}</h2>
+        <p>{subtitle}</p>
+      </div>
+      <div className="grid auto-rows-auto min-w-[300px] max-w-[600px] w-[50vw] mx-auto space-y-6">
         {children}
       </div>
-    </>
+    </div>
   );
 }

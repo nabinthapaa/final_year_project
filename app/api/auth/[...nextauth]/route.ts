@@ -1,4 +1,3 @@
-import { INVALID_AGE } from "@/app/signup/[type]/Errors/FormErros";
 import { ConnectToDB } from "@/libs/connectToDB";
 import Doctor from "@/models/Doctor";
 import User from "@/models/User";
@@ -19,22 +18,46 @@ export const authOptions: AuthOptions = {
         const { email, password, type } = credentials;
         try {
           if (type === "doctor") {
-            await ConnectToDB();
-            const doctor = await Doctor.findOne({ email });
-            if (!doctor) return null;
-            const passwordMatch = await bcrypt.compare(
-              password,
-              doctor.password
-            );
-            if (!passwordMatch) throw new Error("Invalid Credentials");
-            return doctor;
+            try {
+              await ConnectToDB();
+              const doctor = await Doctor.findOne({ email });
+              if (!doctor) return null;
+              const passwordMatch = await bcrypt.compare(
+                password,
+                doctor.password
+              );
+              if (!passwordMatch) throw new Error("Invalid Credentials");
+              const modifiedUser = doctor["_doc"];
+              delete modifiedUser.password;
+
+              return { ...modifiedUser, type };
+            } catch (error) {
+              if (error instanceof Error) {
+                return null;
+              }
+            }
           } else if (type === "user") {
-            await ConnectToDB();
-            const user = await User.findOne({ email });
-            if (!user) return null;
-            const passwordMatch = await bcrypt.compare(password, user.password);
-            if (!passwordMatch) throw new Error("Invalid Credentials");
-            return user;
+            try {
+              await ConnectToDB();
+              const user = await User.findOne({ email });
+              if (!user) return null;
+              console.log("Authorize: ", user);
+              const passwordMatch = await bcrypt.compare(
+                password,
+                user.password
+              );
+              if (!passwordMatch) throw new Error("Invalid Credentials");
+
+              const modifiedUser = user["_doc"];
+              delete modifiedUser.password;
+
+              return { ...modifiedUser, type };
+            } catch (error) {
+              if (error instanceof Error) {
+                console.log(error.message);
+                return null;
+              }
+            }
           } else {
             return null;
           }
@@ -52,6 +75,30 @@ export const authOptions: AuthOptions = {
   },
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      try {
+        if (user) {
+          token.user = {
+            ...user,
+          };
+        }
+
+        return token;
+      } catch (error) {
+        console.error("JWT Callback Error:", error);
+        return token;
+      }
+    },
+    //@ts-ignore
+    async session({ session, token, user }) {
+      return {
+        ...session,
+        user: token.user,
+        ...token,
+      };
+    },
   },
 };
 

@@ -1,7 +1,6 @@
 "use client";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Router } from "next/router";
+import { signIn, useSession } from "next-auth/react";
+import { RedirectType, redirect, useRouter } from "next/navigation";
 import React, { FormEvent } from "react";
 
 const loginInputs = [
@@ -20,7 +19,11 @@ const loginInputs = [
 ];
 
 function LoginPage() {
+  const { data: session } = useSession();
   const router = useRouter();
+
+  if (session) redirect("/dashboard", RedirectType.replace);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email: string = e.currentTarget.email.value;
@@ -50,7 +53,7 @@ function LoginPage() {
       onSubmit={handleSubmit}
     >
       {loginInputs.map((input) => (
-        <>
+        <React.Fragment key={input.id}>
           <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent">
             <span>{input.label}</span>
             <input
@@ -59,7 +62,7 @@ function LoginPage() {
               className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
             />
           </label>
-        </>
+        </React.Fragment>
       ))}
       <label
         htmlFor="type"
