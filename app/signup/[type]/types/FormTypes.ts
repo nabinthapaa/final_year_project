@@ -13,6 +13,7 @@ export type DoctorTechnicalData = {
   specialization: string;
   experience: string;
   department: string;
+  nmc?: string;
 };
 
 export type DoctorTechnicalProps = DoctorTechnicalData & {

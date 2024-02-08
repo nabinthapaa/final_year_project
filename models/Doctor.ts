@@ -47,6 +47,10 @@ const DoctorSchema = new Schema(
       type: String,
       required: true,
     },
+    mnc: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );

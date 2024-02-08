@@ -19,6 +19,7 @@ async function createDoctor(data: any): Promise<void> {
     specialization: data.specialization,
     experience: data.experience,
     department: data.department,
+    NMC_No: data.nmc,
   });
 }
 
