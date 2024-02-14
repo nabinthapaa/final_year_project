@@ -15,7 +15,7 @@ async function SuggestedDoctor({
       <h1 className="font-bold text-3xl mb-6">
         Suggested Doctors for Department: {dept}
       </h1>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 pb-10">
         {data.map((doctor: any) => (
           <DoctorCard key={doctor._id} data={doctor} />
         ))}

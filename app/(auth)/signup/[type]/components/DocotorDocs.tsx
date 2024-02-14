@@ -37,6 +37,7 @@ function DocotorDocs({
         handleChange={(v: { [key: string]: File }) => updateFields({ ...v })}
         key_="citizenship_id"
         label="Upload Citizenship"
+        required
       />
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>NMC No.</span>
@@ -56,6 +57,7 @@ function DocotorDocs({
         handleChange={(v: { [key: string]: File }) => updateFields({ ...v })}
         key_="nmc_certificate"
         label="Upload NMC Certificate"
+        required
       />
     </FormWrapper>
   );

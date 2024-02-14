@@ -1,10 +1,10 @@
 "use client";
 import React, { useRef, useState } from "react";
 
-const ImageUploader = ({ image, handleChange, label, key_ }: any) => {
+const ImageUploader = ({ image, handleChange, label, key_, required }: any) => {
   const [imageName, setImageName] = useState("");
   const [imageFile, setImageFile] = useState(null);
-  const imageRef = useRef<HTMLInputElement>();
+  const imageRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
@@ -35,6 +35,7 @@ const ImageUploader = ({ image, handleChange, label, key_ }: any) => {
           type="file"
           accept="image/*"
           className="sr-only"
+          required={required}
           onChange={handleImageChange}
         />
         {imageName ? (
