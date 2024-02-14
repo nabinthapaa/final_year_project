@@ -1,3 +1,4 @@
+import { ConnectToDB } from "@/libs/connectToDB";
 import Doctor from "@/models/Doctor";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -5,6 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
     const dept = searchParams.get("dept");
+    await ConnectToDB();
 
     const doctors = await Doctor.find({ department: dept })
       .select("-password")
