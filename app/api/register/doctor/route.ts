@@ -30,17 +30,21 @@ async function createDoctor(data: any): Promise<void> {
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const form_data = await req.formData();
-    const image = form_data.get("image") as unknown as File;
-    const data = JSON.parse(form_data.get("otherinfo") as unknown as string);
-    const url = await saveImage(image);
-    data.image_url = url;
+    console.log("🚀 -----------------------------------🚀");
+    console.log("🚀 -> POST -> form_data:", form_data);
+    console.log("🚀 -----------------------------------🚀");
+    return NextResponse.json({ message: "a", status: 200 });
+    // const image = form_data.get("image") as unknown as File;
+    // const data = JSON.parse(form_data.get("otherinfo") as unknown as string);
+    // const url = await saveImage(image);
+    // data.image_url = url;
 
-    await createDoctor(data);
+    // await createDoctor(data);
 
-    return NextResponse.json(
-      { message: "Account created Successfully" },
-      { status: 201 }
-    );
+    // return NextResponse.json(
+    //   { message: "Account created Successfully" },
+    //   { status: 201 }
+    // );
   } catch (error: any) {
     console.error(error.stack || error.message || "Internal Server Error");
     return NextResponse.json(

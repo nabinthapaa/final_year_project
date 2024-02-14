@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 
-const ImageUploader = ({ image, handleChange }: any) => {
+const ImageUploader = ({ image, handleChange, label, key_ }: any) => {
   const [imageName, setImageName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const imageRef = useRef<HTMLInputElement>();
@@ -9,7 +9,7 @@ const ImageUploader = ({ image, handleChange }: any) => {
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
-      handleChange({ image: file });
+      handleChange({ [key_]: file });
       setImageName(file.name);
       setImageFile(file);
     }
@@ -27,9 +27,9 @@ const ImageUploader = ({ image, handleChange }: any) => {
   return (
     <>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left w-full">
-        <span>Upload Image</span>
+        <span>{label}</span>
         <input
-          id="image-upload"
+          id={key_}
           ref={imageRef}
           name="image"
           type="file"

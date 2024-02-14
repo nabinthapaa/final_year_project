@@ -27,4 +27,25 @@ export const TechnicalInputs = [
     placeholder: "Please enter your Department",
     required: true,
   },
+  {
+    label: "Citizenship number and image",
+    id: "department",
+    type: "text",
+    placeholder: "Please enter your Department",
+    required: true,
+  },
+  {
+    label: "NMC Certificate",
+    id: "department",
+    type: "text",
+    placeholder: "Please enter your Department",
+    required: true,
+  },
+  {
+    label: "Previous Qualification and cerificates",
+    id: "department",
+    type: "text",
+    placeholder: "Please enter your Department",
+    required: true,
+  },
 ];

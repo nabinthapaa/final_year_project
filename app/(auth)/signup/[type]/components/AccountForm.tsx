@@ -55,7 +55,11 @@ export function AccountForm({
       </label>
       <ImageUploader
         image={image}
-        handleChange={(image) => updateFields({ ...image })}
+        handleChange={(image: { [key: string]: File }) =>
+          updateFields({ ...image })
+        }
+        key_="image"
+        label="Uploade Picture"
       />
     </FormWrapper>
   );

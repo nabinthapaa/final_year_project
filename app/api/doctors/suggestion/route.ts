@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const doctors = await Doctor.find({ department: dept })
       .select("-password")
       .lean();
+    console.log(doctors);
 
     return NextResponse.json({
       message: "Retrieved Successfully",

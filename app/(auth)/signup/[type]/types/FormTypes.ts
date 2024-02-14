@@ -5,21 +5,19 @@ export type AccountData = {
   image: File | null;
 };
 
-export type AccountFormProps = AccountData & {
-  updateFields: (fields: Partial<AccountData>) => void;
-};
-
 export type DoctorTechnicalData = {
   qualification: string;
   specialization: string;
   experience: string;
   department: string;
-  nmc?: string;
   hospital?: string;
 };
 
-export type DoctorTechnicalProps = DoctorTechnicalData & {
-  updateFields: (fields: Partial<DoctorTechnicalData>) => void;
+export type DoctorDocs = {
+  citizenship: number | undefined;
+  citizenship_id: File | null;
+  nmc_no: number | undefined;
+  nmc_certificate: File | null;
 };
 
 export type UserData = {
@@ -31,9 +29,23 @@ export type UserData = {
   address: string;
 };
 
+export type AccountFormProps = AccountData & {
+  updateFields: (fields: Partial<AccountData>) => void;
+};
+
+export type DoctorTechnicalProps = DoctorTechnicalData & {
+  updateFields: (fields: Partial<DoctorTechnicalData>) => void;
+};
+
+export type DoctorDocsProps = DoctorDocs & {
+  updateFields: (fields: Partial<DoctorDocs>) => void;
+};
+
 export type UserFormProps = UserData & {
   updateFields: (fields: Partial<UserData>) => void;
 };
 
 export type UserFormData = UserData & AccountData;
-export type DoctorFormData = UserData & AccountData & DoctorTechnicalData;
+export type DoctorFormData = UserData &
+  AccountData &
+  DoctorTechnicalData & { docs: DoctorDocs };

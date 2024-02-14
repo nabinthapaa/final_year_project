@@ -6,26 +6,33 @@ import {
   PASSWORD_DID_NOT_MATCH,
 } from "../Errors/FormErros";
 import { useMultistepForm } from "../hooks/useMultistepForm";
-import { DoctorFormData } from "../types/FormTypes";
+import { DoctorDocs, DoctorFormData } from "../types/FormTypes";
 import { AccountForm } from "./AccountForm";
+import DocotorDocs from "./DocotorDocs";
 import { DoctorTechnical } from "./DoctorTechnical";
 import { PersonalForm } from "./PersonalForm";
 
 const INITIAL_DATA: DoctorFormData = {
-  firstName: "",
-  lastName: "",
-  age: "",
-  qualification: "",
-  specialization: "",
-  department: "",
-  experience: "",
-  email: "",
-  password: "",
-  repassword: "",
+  firstName: "John",
+  lastName: "Watson",
+  age: "45",
+  qualification: "MBBS",
+  specialization: "Neurologist",
+  department: "Cardio",
+  experience: "10",
+  email: "johna@gmail.com",
+  password: "123123",
+  repassword: "123123",
   image: null,
-  gender: "",
-  address: "",
-  hospital: "",
+  gender: "male",
+  address: "kali",
+  hospital: "123123",
+  docs: {
+    citizenship: undefined,
+    citizenship_id: null,
+    nmc_no: undefined,
+    nmc_certificate: null,
+  },
 };
 
 function validateDoctor(data: DoctorFormData) {
@@ -47,10 +54,24 @@ export default function DoctorForm() {
       return { ...prev, ...fields };
     });
   }
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
+
+  function updateDocs(fields: Partial<DoctorDocs>) {
+    setData((prev) => {
+      return {
+        ...prev,
+        docs: {
+          ...prev.docs,
+          ...fields,
+        },
+      };
+    });
+  }
+
+  const { goTo, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <AccountForm key="account" {...data} updateFields={updateFields} />,
       <PersonalForm key="user" {...data} updateFields={updateFields} />,
+      <DocotorDocs key="docs" {...data.docs} updateFields={updateDocs} />,
       <DoctorTechnical key="address" {...data} updateFields={updateFields} />,
     ]);
 
@@ -62,9 +83,13 @@ export default function DoctorForm() {
       validateDoctor(data);
       try {
         const formData = new FormData();
-        const { image, ...otherdata } = data;
+        const { image, docs, ...otherdata } = data;
+        const { citizenship_id, nmc_certificate, ...otherdocs } = docs;
+        if (citizenship_id) formData.set("citizenship_id", citizenship_id);
+        if (nmc_certificate) formData.set("nmc_certificate", nmc_certificate);
         if (data.image) formData.set("image", data.image);
         formData.set("otherinfo", JSON.stringify({ ...otherdata }));
+        formData.set("otherdocs", JSON.stringify({ ...otherdocs }));
         const res = await fetch("/api/register/doctor", {
           method: "POST",
           body: formData,
@@ -96,6 +121,7 @@ export default function DoctorForm() {
               ? "bg-accent/30 border-white border shadow-custom"
               : null
           } px-5 rounded-xl py-2`}
+          onClick={() => goTo(0)}
         >
           <p>Step 1</p>
           <p className="font-bold text-md">Set up credentials</p>
@@ -104,6 +130,7 @@ export default function DoctorForm() {
           className={`${
             currentStepIndex === 1 ? "bg-accent/30 border-white border" : null
           } px-5 rounded-xl py-2`}
+          onClick={() => goTo(1)}
         >
           <p>Step 2</p>
           <p className="font-bold text-md">Enter Info</p>
@@ -112,8 +139,18 @@ export default function DoctorForm() {
           className={`${
             currentStepIndex === 2 ? "bg-gray-50/30 border-white border" : null
           } px-5 rounded-xl py-2`}
+          onClick={() => goTo(2)}
         >
           <p>Step 3</p>
+          <p className="font-bold text-md">Enter Legal Info</p>
+        </div>{" "}
+        <div
+          className={`${
+            currentStepIndex === 3 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+          onClick={() => goTo(3)}
+        >
+          <p>Step 4</p>
           <p className="font-bold text-md">Enter Work Info</p>
         </div>
       </div>
