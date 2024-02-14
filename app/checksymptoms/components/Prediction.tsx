@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 type PredictionProps = {
@@ -23,7 +24,12 @@ export default function Prediction({
           <p>
             Predicted Disease: <span>{predicteddisease}</span>
           </p>
-          <p>Department: {consultdoctor}</p>
+          <p>
+            Department:{" "}
+            <Link href={`/suggested-doctor?dept=${consultdoctor}`}>
+              {consultdoctor}
+            </Link>
+          </p>
           <div className="relative px-2 py-2">
             <div className="absolute left-0 right-0 rounded-full bg-accent inset-0"></div>
             <div

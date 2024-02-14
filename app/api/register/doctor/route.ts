@@ -51,17 +51,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const id = await createDoctor(data);
     docs_info.doctorId = id;
-    await createDoctorDocs(docs_info);
+    try {
+      await createDoctorDocs(docs_info);
+    } catch (e) {
+      if (e instanceof Error) {
+        await Doctor.findByIdAndDelete(id);
+        throw new Error(e.message);
+      }
+    }
 
     return NextResponse.json(
       { message: "Account created Successfully" },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error(error.stack || error.message || "Internal Server Error");
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 500 }
-    );
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json(
+        { message: error.message || "Internal Server Error" },
+        { status: 500 }
+      );
   }
 }

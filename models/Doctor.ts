@@ -47,6 +47,7 @@ const DoctorSchema = new Schema(
     specialization: {
       type: String,
       required: true,
+      index: true,
     },
     experience: {
       type: Number,

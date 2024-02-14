@@ -1,4 +1,5 @@
 import { ConnectToDB } from "@/libs/connectToDB";
+import Appointment from "@/models/Appointment";
 import Doctor from "@/models/Doctor";
 import DoctorDocs from "@/models/DoctorDocs";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,28 +7,21 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const dept = searchParams.get("dept");
+    const id = searchParams.get("id");
     await ConnectToDB();
-
-    const doctors = await Doctor.find({ specialization: dept })
-      .select("-password")
+    const appointment = await Appointment.findOne({ user: id })
+      .populate("doctor")
       .lean();
-
-    const doctorIds = doctors.map((doctor) => doctor._id);
-    const nmcData = await DoctorDocs.find({
-      doctorId: { $in: doctorIds },
-    })
-      .select("nmc_no doctorId")
-      .lean();
-    doctors.forEach((doctor) => {
-      const nmcInfo = nmcData.find((nmc) => nmc.doctorId.equals(doctor._id));
-      if (nmcInfo) doctor.nmc = nmcInfo.nmc_no;
+    const nmc = await DoctorDocs.findOne({
+      //@ts-ignore
+      doctorId: appointment?.doctor?._id,
     });
-
+    //@ts-ignore
+    appointment.doctor.nmc = nmc.nmc_no;
     return NextResponse.json({
-      message: "Retrieved Successfully",
+      message: "Appointment retrieved",
       status: 200,
-      data: doctors,
+      data: appointment,
     });
   } catch (error) {
     if (error instanceof Error) {

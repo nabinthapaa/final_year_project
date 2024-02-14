@@ -14,8 +14,8 @@ function DocotorDocs({
 }: DoctorDocsProps) {
   return (
     <FormWrapper
-      title="Account Credentials"
-      subtitle="Please remeber these credentials for future usage"
+      title="Legal Information"
+      subtitle="Please enter the valid legal information"
     >
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Citizenship Number</span>

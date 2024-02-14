@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
 import {
   INVALID_AGE,
@@ -49,6 +50,7 @@ function validateDoctor(data: DoctorFormData) {
 
 export default function DoctorForm() {
   const [data, setData] = useState(INITIAL_DATA);
+  const [loading, setLoading] = useState(false);
   function updateFields(fields: Partial<DoctorFormData>) {
     setData((prev) => {
       return { ...prev, ...fields };
@@ -80,6 +82,7 @@ export default function DoctorForm() {
     console.log(data);
     if (!isLastStep) return next();
     try {
+      setLoading(true);
       validateDoctor(data);
       try {
         const formData = new FormData();
@@ -95,7 +98,7 @@ export default function DoctorForm() {
           body: formData,
         });
         if (res.ok) {
-          alert((await res.json()).message);
+          redirect("/login");
         } else {
           alert("Something Went wrong");
         }
@@ -107,6 +110,8 @@ export default function DoctorForm() {
       if (error instanceof Error) {
         alert(JSON.stringify({ error: error.message }));
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -121,7 +126,6 @@ export default function DoctorForm() {
               ? "bg-accent/30 border-white border shadow-custom"
               : null
           } px-5 rounded-xl py-2`}
-          onClick={() => goTo(0)}
         >
           <p>Step 1</p>
           <p className="font-bold text-md">Set up credentials</p>
@@ -130,7 +134,6 @@ export default function DoctorForm() {
           className={`${
             currentStepIndex === 1 ? "bg-accent/30 border-white border" : null
           } px-5 rounded-xl py-2`}
-          onClick={() => goTo(1)}
         >
           <p>Step 2</p>
           <p className="font-bold text-md">Enter Info</p>
@@ -139,7 +142,6 @@ export default function DoctorForm() {
           className={`${
             currentStepIndex === 2 ? "bg-gray-50/30 border-white border" : null
           } px-5 rounded-xl py-2`}
-          onClick={() => goTo(2)}
         >
           <p>Step 3</p>
           <p className="font-bold text-md">Enter Legal Info</p>
@@ -148,7 +150,6 @@ export default function DoctorForm() {
           className={`${
             currentStepIndex === 3 ? "bg-gray-50/30 border-white border" : null
           } px-5 rounded-xl py-2`}
-          onClick={() => goTo(3)}
         >
           <p>Step 4</p>
           <p className="font-bold text-md">Enter Work Info</p>
@@ -166,16 +167,18 @@ export default function DoctorForm() {
         >
           {!isFirstStep && (
             <button
-              className="bg-accent px-10 py-2 font-bold text-lg rounded-full"
+              className="bg-accent px-10 py-2 font-bold text-lg rounded-full disabled:opacity-50"
               type="button"
               onClick={back}
+              disabled={loading}
             >
               Back
             </button>
           )}
           <button
-            className="bg-teal px-10 py-2 font-bold text-lg rounded-full"
+            className="bg-teal px-10 py-2 font-bold text-lg rounded-full disabled:opacity-50"
             type="submit"
+            disabled={loading}
           >
             {isLastStep ? "Finish" : "Next"}
           </button>

@@ -1,3 +1,4 @@
+import { Specialization } from "@/utils/DoctorsSpecialist";
 import { DoctorTechnicalProps } from "../types/FormTypes";
 import { FormWrapper } from "./FormWrapper";
 
@@ -28,30 +29,37 @@ export function DoctorTechnical({
         />
       </label>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
-        <span>Specialization</span>
+        <span>Experience</span>
         <input
           id="specialization"
           name="specialization"
           placeholder="Enter your Specialization..."
           type="text"
           required
-          value={specialization}
-          onChange={(e) => updateFields({ specialization: e.target.value })}
-          className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
-        />
-      </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
-        <span>Experience</span>
-        <input
-          id="experience"
-          name="experience"
-          placeholder="Enter your Experience in years..."
-          type="number"
-          required
           value={experience}
           onChange={(e) => updateFields({ experience: e.target.value })}
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
+      </label>
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
+        <span>Specialization</span>
+        <select
+          id="gender"
+          name="gender"
+          required
+          value={specialization}
+          onChange={(e) => updateFields({ specialization: e.target.value })}
+          className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
+        >
+          <option selected={true} value="other" className="text-teal font-bold">
+            Other
+          </option>
+          {Specialization.map((v) => (
+            <option key={v} value={v} className="text-teal font-bold">
+              {v}
+            </option>
+          ))}
+        </select>
       </label>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Department</span>
@@ -69,10 +77,10 @@ export function DoctorTechnical({
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Hospital</span>
         <input
-          id="nmc"
-          name="nmc"
+          id="hospital"
+          name="hospital"
           placeholder="Enter hospital currently working.."
-          type="number"
+          type="text"
           required
           value={hospital}
           onChange={(e) => updateFields({ hospital: e.target.value })}
