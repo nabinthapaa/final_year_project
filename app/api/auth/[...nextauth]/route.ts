@@ -20,17 +20,16 @@ export const authOptions: AuthOptions = {
           if (type === "doctor") {
             try {
               await ConnectToDB();
-              const doctor = await Doctor.findOne({ email });
+              const doctor = await Doctor.findOne({ email }).lean();
               if (!doctor) return null;
               const passwordMatch = await bcrypt.compare(
                 password,
                 doctor.password
               );
               if (!passwordMatch) throw new Error("Invalid Credentials");
-              const modifiedUser = doctor["_doc"];
-              delete modifiedUser.password;
+              delete doctor.password;
 
-              return { ...modifiedUser, type };
+              return { ...doctor, type };
             } catch (error) {
               if (error instanceof Error) {
                 return null;
@@ -39,7 +38,7 @@ export const authOptions: AuthOptions = {
           } else if (type === "user") {
             try {
               await ConnectToDB();
-              const user = await User.findOne({ email });
+              const user = await User.findOne({ email }).lean();
               if (!user) return null;
               console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
@@ -48,10 +47,9 @@ export const authOptions: AuthOptions = {
               );
               if (!passwordMatch) throw new Error("Invalid Credentials");
 
-              const modifiedUser = user["_doc"];
-              delete modifiedUser.password;
+              delete user.password;
 
-              return { ...modifiedUser, type };
+              return { ...user, type };
             } catch (error) {
               if (error instanceof Error) {
                 console.log(error.message);

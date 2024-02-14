@@ -14,7 +14,9 @@ interface ISymptoms {
 export default function CheckSymptoms() {
   const { data: session } = useSession();
   const [selectedOption, setSelectedOption] = useState<ISymptoms[]>([]);
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>(
+    session?.user ? `${session?.user?.firstName} ${session?.user.lastName}` : ""
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<{} | undefined>();
 
@@ -25,12 +27,20 @@ export default function CheckSymptoms() {
       setName(`${session.user.firstName} ${session.user.lastName}`);
     }
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setResult({
-      percentage: "60%",
-      diseases: "Malaria",
-      department: "General",
-    });
+    try {
+      const formData = new FormData();
+      formData.set("symptoms", JSON.stringify(selectedOption));
+      const res = await fetch("/api/diseases", {
+        method: "POST",
+        body: formData,
+      });
+      const { data } = await res.json();
+      setResult(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
     setLoading(false);
   };
 

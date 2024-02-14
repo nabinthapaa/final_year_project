@@ -1,4 +1,5 @@
 import { ConnectToDB } from "@/libs/connectToDB";
+import { saveImage } from "@/libs/saveImage";
 import Doctor from "@/models/Doctor";
 import { hash } from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,13 +20,21 @@ async function createDoctor(data: any): Promise<void> {
     specialization: data.specialization,
     experience: data.experience,
     department: data.department,
-    NMC_No: data.nmc,
+    nmc: data.nmc,
+    image: data.image_url,
+    address: data.address,
+    gender: data.gender,
   });
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const data = await req.json();
+    const form_data = await req.formData();
+    const image = form_data.get("image") as unknown as File;
+    const data = JSON.parse(form_data.get("otherinfo") as unknown as string);
+    const url = await saveImage(image);
+    data.image_url = url;
+
     await createDoctor(data);
 
     return NextResponse.json(

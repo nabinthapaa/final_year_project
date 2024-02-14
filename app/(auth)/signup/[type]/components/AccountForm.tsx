@@ -1,3 +1,4 @@
+import ImageUploader from "@/components/UploadImageButton";
 import { AccountFormProps } from "../types/FormTypes";
 import { FormWrapper } from "./FormWrapper";
 
@@ -5,6 +6,7 @@ export function AccountForm({
   email,
   password,
   repassword,
+  image,
   updateFields,
 }: AccountFormProps) {
   return (
@@ -12,7 +14,7 @@ export function AccountForm({
       title="Account Credentials"
       subtitle="Please remeber these credentials for future usage"
     >
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Email</span>
         <input
           id="email"
@@ -25,7 +27,7 @@ export function AccountForm({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Password</span>
         <input
           id="password"
@@ -38,7 +40,7 @@ export function AccountForm({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Password</span>
         <input
           id="repassword"
@@ -51,6 +53,10 @@ export function AccountForm({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
+      <ImageUploader
+        image={image}
+        handleChange={(image) => updateFields({ ...image })}
+      />
     </FormWrapper>
   );
 }

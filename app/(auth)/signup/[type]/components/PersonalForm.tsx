@@ -15,7 +15,7 @@ export function PersonalForm({
       subtitle="Please provide all the field correctly"
     >
       <div className="flex flex-col space-y-4 w-full">
-        <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+        <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
           <span>First Name</span>
           <input
             id="firstName"
@@ -28,7 +28,7 @@ export function PersonalForm({
           />
         </label>
 
-        <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+        <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
           <span>Last Name</span>
           <input
             id="lastName"
@@ -40,7 +40,7 @@ export function PersonalForm({
             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
           />
         </label>
-        <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+        <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
           <span>Age</span>
           <input
             id="age"
@@ -54,7 +54,7 @@ export function PersonalForm({
             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
           />
         </label>
-        <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+        <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
           <span>Address</span>
           <input
             id="address"
@@ -67,7 +67,7 @@ export function PersonalForm({
             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
           />
         </label>
-        <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+        <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
           <span>Gender</span>
           <select
             id="gender"

@@ -7,6 +7,7 @@ export function DoctorTechnical({
   experience,
   department,
   nmc,
+  hospital,
   updateFields,
 }: DoctorTechnicalProps) {
   return (
@@ -14,8 +15,8 @@ export function DoctorTechnical({
       title="Work Related Info"
       subtitle="Please fill all the field for regtisteration"
     >
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
-        <span>Qualification</span>
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
+        <span>Degree</span>
         <input
           id="qualification"
           name="qualification"
@@ -27,7 +28,7 @@ export function DoctorTechnical({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Specialization</span>
         <input
           id="specialization"
@@ -40,7 +41,7 @@ export function DoctorTechnical({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Experience</span>
         <input
           id="experience"
@@ -53,7 +54,7 @@ export function DoctorTechnical({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Department</span>
         <input
           id="department"
@@ -66,7 +67,7 @@ export function DoctorTechnical({
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left text-accent w-full">
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>NMC No.</span>
         <input
           id="nmc"
@@ -76,6 +77,19 @@ export function DoctorTechnical({
           required
           value={nmc}
           onChange={(e) => updateFields({ nmc: e.target.value })}
+          className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
+        />
+      </label>
+      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
+        <span>Hospital</span>
+        <input
+          id="nmc"
+          name="nmc"
+          placeholder="Enter hospital currently working.."
+          type="number"
+          required
+          value={hospital}
+          onChange={(e) => updateFields({ hospital: e.target.value })}
           className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
         />
       </label>

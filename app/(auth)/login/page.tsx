@@ -40,7 +40,7 @@ function LoginPage() {
         alert("Invalid Credentials");
         return;
       }
-      router.replace("/dashboard");
+      router.replace("/profile");
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);

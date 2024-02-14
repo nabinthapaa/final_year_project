@@ -15,6 +15,9 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     age: {
       type: Number,
       required: true,
@@ -25,6 +28,13 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: true,
+    },
+    address: {
+      type: String,
+    },
+    gender: {
+      type: String,
+      default: "not-specified",
     },
   },
   { timestamps: true }

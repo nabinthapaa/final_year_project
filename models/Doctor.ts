@@ -23,6 +23,9 @@ const DoctorSchema = new Schema(
     phone: {
       type: String,
     },
+    image: {
+      type: String,
+    },
     DateOfBirth: {
       type: Date,
     },
@@ -30,7 +33,12 @@ const DoctorSchema = new Schema(
       type: String,
       required: true,
     },
-
+    address: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
     qualification: {
       type: String,
       required: true,
@@ -46,10 +54,15 @@ const DoctorSchema = new Schema(
     department: {
       type: String,
       required: true,
+      index: true,
     },
-    mnc: {
+    nmc: {
       type: Number,
       required: true,
+      unique: true,
+    },
+    hospital: {
+      type: String,
     },
   },
   { timestamps: true }

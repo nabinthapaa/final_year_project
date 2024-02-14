@@ -2,6 +2,7 @@ export type AccountData = {
   email: string;
   password: string;
   repassword: string;
+  image: File | null;
 };
 
 export type AccountFormProps = AccountData & {
@@ -14,6 +15,7 @@ export type DoctorTechnicalData = {
   experience: string;
   department: string;
   nmc?: string;
+  hospital?: string;
 };
 
 export type DoctorTechnicalProps = DoctorTechnicalData & {

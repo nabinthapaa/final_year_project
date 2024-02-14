@@ -1,73 +1,76 @@
 "use client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   INVALID_AGE,
   INVALID_EMAIL,
   PASSWORD_DID_NOT_MATCH,
 } from "../Errors/FormErros";
 import { useMultistepForm } from "../hooks/useMultistepForm";
-import { UserFormData } from "../types/FormTypes";
+import { DoctorFormData } from "../types/FormTypes";
 import { AccountForm } from "./AccountForm";
+import { DoctorTechnical } from "./DoctorTechnical";
 import { PersonalForm } from "./PersonalForm";
 
-const INITIAL_DATA: UserFormData = {
+const INITIAL_DATA: DoctorFormData = {
   firstName: "",
   lastName: "",
   age: "",
-  gender: "",
-  address: "",
+  qualification: "",
+  specialization: "",
+  department: "",
+  experience: "",
   email: "",
   password: "",
   repassword: "",
+  image: null,
+  gender: "",
+  address: "",
+  hospital: "",
 };
 
-function validateUser(data: UserFormData) {
-  if (Number(data.age) < 18) {
-    alert("Please enter a valid age");
+function validateDoctor(data: DoctorFormData) {
+  if (Number(data.age) < 22) {
     throw INVALID_AGE;
   } else if (
     !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.email)
   ) {
-    alert("please enter a valid email");
     throw INVALID_EMAIL;
   } else if (data.password !== data.repassword) {
     throw PASSWORD_DID_NOT_MATCH;
   }
 }
 
-function UserForm() {
+export default function DoctorForm() {
   const [data, setData] = useState(INITIAL_DATA);
-  const [loading, setloading] = useState(false);
-  const router = useRouter();
-
+  function updateFields(fields: Partial<DoctorFormData>) {
+    setData((prev) => {
+      return { ...prev, ...fields };
+    });
+  }
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <AccountForm key="account" {...data} updateFields={updateFields} />,
       <PersonalForm key="user" {...data} updateFields={updateFields} />,
+      <DoctorTechnical key="address" {...data} updateFields={updateFields} />,
     ]);
-  function updateFields(field: Partial<UserFormData>) {
-    setData((prev) => ({ ...prev, ...field }));
-  }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    console.log(data);
     if (!isLastStep) return next();
-    setloading(true);
     try {
-      validateUser(data);
+      validateDoctor(data);
       try {
-        const res = await fetch("/api/register/user", {
+        const formData = new FormData();
+        const { image, ...otherdata } = data;
+        if (data.image) formData.set("image", data.image);
+        formData.set("otherinfo", JSON.stringify({ ...otherdata }));
+        const res = await fetch("/api/register/doctor", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          body: formData,
         });
         if (res.ok) {
-          alert("Account Succesfully created");
-          router.replace("/dashboard");
+          alert((await res.json()).message);
         } else {
           alert("Something Went wrong");
         }
@@ -79,33 +82,42 @@ function UserForm() {
       if (error instanceof Error) {
         alert(JSON.stringify({ error: error.message }));
       }
-    } finally {
-      setloading(false);
     }
-  };
+  }
+
   return (
-    <div className="relative border gap-4 w-fit  mx-auto p-6 mt-5 rounded-2xl bg-gray-600 shadow-sm grid grid-cols-[0.2fr,1fr]">
+    <div className="relative border gap-4 w-fit  mx-auto p-6 mt-5 rounded-2xl glasscard shadow-sm grid grid-cols-[0.2fr,1fr]">
       <div
         className={`w-52 h-full pt-16 px-2 rounded-md shadow-gray-600  space-y-6`}
       >
         <div
           className={`${
-            currentStepIndex === 0 ? "bg-gray-50/30 border-white border" : null
+            currentStepIndex === 0
+              ? "bg-accent/30 border-white border shadow-custom"
+              : null
           } px-5 rounded-xl py-2`}
         >
           <p>Step 1</p>
-          <p className="font-bold text-md">Your credentials</p>
+          <p className="font-bold text-md">Set up credentials</p>
         </div>
         <div
           className={`${
-            currentStepIndex === 1 ? "bg-gray-50/30 border-white border" : null
+            currentStepIndex === 1 ? "bg-accent/30 border-white border" : null
           } px-5 rounded-xl py-2`}
         >
           <p>Step 2</p>
-          <p className="font-bold text-md">Your Info</p>
+          <p className="font-bold text-md">Enter Info</p>
+        </div>
+        <div
+          className={`${
+            currentStepIndex === 2 ? "bg-gray-50/30 border-white border" : null
+          } px-5 rounded-xl py-2`}
+        >
+          <p>Step 3</p>
+          <p className="font-bold text-md">Enter Work Info</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         {step}
         <div
           style={{
@@ -117,18 +129,16 @@ function UserForm() {
         >
           {!isFirstStep && (
             <button
-              className="bg-accent px-5 py-2 font-bold text-lg rounded-full disabled:bg-accent/30"
+              className="bg-accent px-10 py-2 font-bold text-lg rounded-full"
               type="button"
               onClick={back}
-              disabled={loading}
             >
               Back
             </button>
           )}
           <button
-            className="bg-teal px-5 py-2 font-bold text-lg rounded-full disabled:bg-teal/30"
+            className="bg-teal px-10 py-2 font-bold text-lg rounded-full"
             type="submit"
-            disabled={loading}
           >
             {isLastStep ? "Finish" : "Next"}
           </button>
@@ -137,5 +147,3 @@ function UserForm() {
     </div>
   );
 }
-
-export default UserForm;
