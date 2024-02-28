@@ -38,6 +38,7 @@ const DoctorSchema = new Schema(
     },
     gender: {
       type: String,
+      default: "not-specified",
     },
     qualification: {
       type: String,
@@ -46,6 +47,7 @@ const DoctorSchema = new Schema(
     specialization: {
       type: String,
       required: true,
+      index: true,
     },
     experience: {
       type: Number,
@@ -55,11 +57,6 @@ const DoctorSchema = new Schema(
       type: String,
       required: true,
       index: true,
-    },
-    nmc: {
-      type: Number,
-      required: true,
-      unique: true,
     },
     hospital: {
       type: String,

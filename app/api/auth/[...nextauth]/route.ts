@@ -24,9 +24,11 @@ export const authOptions: AuthOptions = {
               if (!doctor) return null;
               const passwordMatch = await bcrypt.compare(
                 password,
+                //@ts-ignore
                 doctor.password
               );
               if (!passwordMatch) throw new Error("Invalid Credentials");
+              //@ts-ignore
               delete doctor.password;
 
               return { ...doctor, type };
@@ -43,10 +45,12 @@ export const authOptions: AuthOptions = {
               console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
                 password,
+                //@ts-ignore
                 user.password
               );
               if (!passwordMatch) throw new Error("Invalid Credentials");
 
+              //@ts-ignore
               delete user.password;
 
               return { ...user, type };

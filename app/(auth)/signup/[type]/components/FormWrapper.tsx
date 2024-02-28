@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type FormWrapperProps = {
-  title: string;
+  title?: string;
   children: ReactNode;
   subtitle?: string;
 };

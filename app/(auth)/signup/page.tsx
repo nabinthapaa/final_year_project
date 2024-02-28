@@ -9,15 +9,15 @@ import GlassCard from "./[type]/components/GlassCard";
 export default function SignUP() {
   const { data: session } = useSession();
   const router = useRouter();
-  if (session) router.replace("/dashboard");
+  if (session) router.replace("/profile");
   return (
     <div className="px-10 mt-[20vh] flex items-center justify-center gap-[10vh]">
       <GlassCard>
-        <div className="signup-glass">
-          <Link
-            href={"/signup/user"}
-            className="h-full w-full flex flex-col items-center space-y-3"
-          >
+        <Link
+          href={"/signup/user"}
+          className="h-full w-full flex flex-col items-center space-y-3"
+        >
+          <div className="signup-glass">
             <div className="h-52 w-52 object-contain">
               <Image
                 src={"/user.svg"}
@@ -27,15 +27,15 @@ export default function SignUP() {
               />
             </div>
             <p className="font-bold text-3xl text-text text-center">User</p>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </GlassCard>
       <GlassCard>
-        <div className="signup-glass">
-          <Link
-            href={"/signup/doctor"}
-            className="h-full w-full flex flex-col items-center space-y-3"
-          >
+        <Link
+          href={"/signup/doctor"}
+          className="h-full w-full flex flex-col items-center space-y-3"
+        >
+          <div className="signup-glass">
             <div className="h-52 w-52 object-contain">
               <Image
                 src={"/doctor.svg"}
@@ -45,8 +45,8 @@ export default function SignUP() {
               />
             </div>
             <p className="font-bold text-3xl text-text text-center">Doctor</p>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </GlassCard>
     </div>
   );
