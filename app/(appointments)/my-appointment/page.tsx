@@ -12,9 +12,11 @@ export default async function page() {
     `${process.env.BASE_URL}/api/user-appointment?id=${session?.user._id}`
   );
   const { data } = await res.json();
+
   if (session?.user.type === "doctor") {
     redirect("/appointments");
   }
+
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold text-center mt-10 text-text">

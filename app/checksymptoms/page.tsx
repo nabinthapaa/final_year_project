@@ -22,7 +22,6 @@ export default function CheckSymptoms() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // POST the selected data to the server and get response
     if (session) {
       setName(`${session.user.firstName} ${session.user.lastName}`);
     }

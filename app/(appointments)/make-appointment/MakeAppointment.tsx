@@ -9,6 +9,7 @@ import React, { FormEvent, useState } from "react";
 export default function MakeAppointment({ doctor }: any) {
   const { data: session } = useSession();
   const [time, setTime] = useState(getDate());
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -26,6 +27,7 @@ export default function MakeAppointment({ doctor }: any) {
       if (res.ok) redirect("/my-appointments");
     } catch (error) {}
   };
+
   return (
     <FormWrapper>
       <GlassCard>

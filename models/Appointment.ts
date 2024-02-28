@@ -16,6 +16,10 @@ export const AppointmentSchema = new Schema(
       type: Date,
       required: true,
     },
+    status:{
+        type: String,
+        default: "booked"
+    },
   },
   { timestamps: true }
 );

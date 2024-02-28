@@ -18,6 +18,7 @@ async function page() {
   if (session?.user.type === "user") {
     redirect("/my-appointment");
   }
+
   return (
     <div className="container mx-auto mt-4">
       <h1 className="text-text font-bold text-3xl">Appointments</h1>

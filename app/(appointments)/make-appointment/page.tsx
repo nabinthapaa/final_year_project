@@ -14,6 +14,6 @@ export default async function page({
     `${process.env.BASE_URL}/api/make-appointment?id=${id}`
   );
   const { data } = await res.json();
-  if (session?.user?.type === "doctor") redirect("/");
+  if (session?.user?.type === "doctor") redirect("/appointments");
   return <MakeAppointment doctor={data} />;
 }
