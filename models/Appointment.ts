@@ -4,13 +4,13 @@ export const AppointmentSchema = new Schema(
   {
     doctor: {
       type: Schema.ObjectId,
-      ref: "Doctor",
+      ref: "doctor",
       index: true,
     },
     user: {
       type: Schema.ObjectId,
-      ref: "User",
-      unique: true,
+      ref: "user",
+      index: true
     },
     meetingTime: {
       type: Date,

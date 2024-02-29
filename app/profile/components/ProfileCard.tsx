@@ -17,7 +17,7 @@ export default function ProfileCard({ data }: any) {
       <div className="profile-view-history">
         <Link
           className="font-bold text-lg px-5 py-2 bg-accent rounded-xl "
-          href="/my-history"
+          href="/history"
         >
           View History
         </Link>

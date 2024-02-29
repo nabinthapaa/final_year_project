@@ -38,6 +38,7 @@ export default function MakeAppointment({ doctor }: any) {
               id="appointment_date"
               name="appointment_date"
               value={doctor.name}
+              readOnly
               className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
             />
           </label>
