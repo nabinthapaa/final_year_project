@@ -82,3 +82,11 @@
   display: grid;
   place-content: center;
 }
+
+[data-disabled=false]{
+    display: none;
+}
+
+[data-disabled=true]{
+    pointer-events: none;
+}

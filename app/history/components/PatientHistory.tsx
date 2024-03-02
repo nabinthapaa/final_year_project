@@ -19,7 +19,6 @@ async function getPatientHistory(id: string) {
         const doctorInfo = doctors.find((doctor) => doctor._id.equals(appointment.doctor));
         if (doctorInfo) appointment.doctor = doctorInfo;
     });
-    console.log("Appointment History: ", appointments)
     return appointments;
 
 }
@@ -27,7 +26,6 @@ async function getPatientHistory(id: string) {
 
 export default async function PatientHistory({ id }: { id: string }) {
     const history = await getPatientHistory(id);
-    console.log(history)
     return (
         <div className='container mx-auto'>
             <h1 className='text-3xl font-bold text-center mt-10 text-text'>My History</h1>
@@ -36,15 +34,17 @@ export default async function PatientHistory({ id }: { id: string }) {
                     No History
                 </p>
             ) :(
-                    history.map((data) =>
+                    <div className='flex flex-wrap gap-4'>
+                    {history.map((data) =>
                         <div key={data._id} className='text-text'>
                             <DoctorCard data={data.doctor} showAppointment={false} />
                             <p className='mt-4'>
-                                <span className='font-bold'>Appointment Date" </span>
+                                <span className='font-bold'>Appointment Date: </span>
                                 {parseDate(getDate(data.meetingTime))}
                             </p>
                         </div>
-                    )
+                    )}
+                    </div>
                 )}
         </div>
     )

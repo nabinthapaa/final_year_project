@@ -16,5 +16,9 @@ export default async function History() {
             </Suspense>
         )
     }
-    else if (session?.user.type === "doctor") return <DoctorHistory id={session.user._id} />
+    else if (session?.user.type === "doctor") return (
+        <Suspense fallback={<div>Loading history...</div>}>
+            <DoctorHistory id={session.user._id as string} />
+        </Suspense>
+    )
 }

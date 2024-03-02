@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-export const AppointmentSchema = new Schema(
+export const RecordSchema = new Schema(
   {
     doctor: {
       type: Schema.ObjectId,
@@ -12,19 +12,17 @@ export const AppointmentSchema = new Schema(
       ref: "user",
       index: true
     },
-    meetingTime: {
-      type: Date,
-      required: true,
-    },
-    status:{
-        type: String,
-        default: "booked"
+    appointment:{
+        type: Schema.ObjectId,
+        ref: "appointment",
+        index: true,
+        unique: true
     },
     symptoms:{
         type: [String],
         default:[],
     },
-    suspectedDisease:{
+    disease:{
         type: String,
         default:'',
     },
@@ -32,6 +30,6 @@ export const AppointmentSchema = new Schema(
   { timestamps: true }
 );
 
-const Appointment =
-  models.Appointment || model("Appointment", AppointmentSchema);
-export default Appointment;
+const Record =
+  models.Record || model("Record", RecordSchema);
+export default Record;

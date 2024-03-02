@@ -3,17 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function DoctorCard({ data, showAppointment = true }: any) {
+interface DoctorCard{
+    data: any,
+    showAppointment: boolean,
+    children: React.ReactNode
+}
+
+export default function DoctorCard({ data, showAppointment = true, children}: DoctorCard) {
     return (
         <div className="rounded-lg h-fit min-w-[300px] w-fit flex flex-col items-center justify-center py-5 border-accent border-2 px-4">
             <div className="relative w-[80%] h-48 rounded-md overflow-hidden">
-                <Image src={data.image || "/image 1.png"} alt={data.name} fill />
+                <Image src={data.image || "/image 1.png"} alt="Profile Picture" fill/>
             </div>
             <div className="pt-4 text-center">
                 <h2 className="font-bold text-xl">
                     {data.firstName + " " + data.lastName}{" "}
                     <span className="font-normal opacity-60 ">({data.age})</span>
                 </h2>
+                {children}
                 <p className="opacity-70 text-sm">{data.address}</p>
                 <p className="opacity-70">
                     <span>{data.qualification}</span> <span>{data.specialization}</span>
