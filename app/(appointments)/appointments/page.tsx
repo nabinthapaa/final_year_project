@@ -60,8 +60,8 @@ async function page() {
                   </span>{" "}
                   {parseDate(getDate(d.meetingTime))}
                 </p>
-                <div className="w-[80%] h-[20px]">
-                    <Link href={`/appointments/view-more?id=${d._id}`}> View More </Link>
+                <div className="w-[80%] h-[20px] mt-4">
+                    <Link href={`/appointments/view-more?id=${d._id}`} className="bg-accent text-text text-bold px-4 py-2"> View More </Link>
                 </div>
               </div>
             </div>
