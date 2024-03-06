@@ -55,7 +55,7 @@ export function DoctorTechnical({
             Other
           </option>
           {Specialization.map((v) => (
-            <option key={v} value={v} className="text-teal font-bold">
+            <option key={v} value={v.toLowerCase()} className="text-teal font-bold">
               {v}
             </option>
           ))}

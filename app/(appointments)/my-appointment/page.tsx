@@ -9,13 +9,13 @@ import React from "react";
 export default async function page() {
     const session = await getServerSession(authOptions);
     const res = await fetch(
-        `${process.env.BASE_URL}/api/user-appointment?id=${session?.user._id}`,
+        `${process.env.BASE_URL}/api/user-appointment?id=${session.id}`,
         { cache: 'no-store' }
     );
     const { data } = await res.json();
     console.log("User Appointment: ", data);
 
-    if (session?.user.type === "doctor") {
+    if (session && session.doctor) {
         redirect("/appointments");
     }
 

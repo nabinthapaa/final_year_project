@@ -84,16 +84,22 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       try {
-        if (user.type === 'user') {
+        if (user && user.type === 'user') {
             token.user = {
               id: user.userId,
-              ...user,
+              type: user.type,
+              obj: user._id
             }
-          }else if(user.type === 'doctor'){
+            token.id = user._id
+          }else if(user && user.type === 'doctor'){
             token.doctor = {
               id: user.doctorId,
+              type: user.type,
+              obj: user._id
             }
+            token.id = user._id
           }
+        console.log('token',token)
         return token;
       } catch (error) {
         console.error("JWT Callback Error:", error);
@@ -106,6 +112,7 @@ export const authOptions: AuthOptions = {
         ...session,
         user: token.user,
         doctor: token.doctor,
+        id: token.id
       };
     },
   },

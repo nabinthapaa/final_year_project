@@ -85,7 +85,6 @@ export default function DoctorForm() {
       setLoading(true);
       validateDoctor(data);
       try {
-        console.log('data',data);
         const res = await axios.post("/api/register/doctor", data);
         if (res.status === 200) {
           router.replace("/login");
