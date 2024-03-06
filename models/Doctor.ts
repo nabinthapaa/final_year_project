@@ -1,4 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
+import {bool} from "prop-types";
 
 const DoctorSchema = new Schema(
   {
@@ -53,11 +54,6 @@ const DoctorSchema = new Schema(
       type: Number,
       required: true,
     },
-    department: {
-      type: String,
-      required: true,
-      index: true,
-    },
     hospital: {
       type: String,
     },
@@ -68,6 +64,10 @@ const DoctorSchema = new Schema(
       doctorId: {
           type: Number,
           required: true
+      },
+      verified: {
+          type: Boolean,
+          default: false
       }
   },
   { timestamps: true }

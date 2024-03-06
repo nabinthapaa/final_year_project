@@ -1,5 +1,5 @@
 import {ConnectToDB} from "@/libs/connectToDB";
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import Doctor from "@/models/Doctor";
 
 export async function GET(req: Request, { params }: {params: {id: number}}){
@@ -17,10 +17,12 @@ export async function GET(req: Request, { params }: {params: {id: number}}){
             userId: user.userId,
             image: user.image,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            verified: user.verified
         }
         return NextResponse.json({
-            data: payload
+            data: payload,
+            status: 401
         })
     }
     catch (error) {
@@ -31,3 +33,4 @@ export async function GET(req: Request, { params }: {params: {id: number}}){
         )
     }
 }
+

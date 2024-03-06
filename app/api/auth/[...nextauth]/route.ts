@@ -27,7 +27,10 @@ export const authOptions: AuthOptions = {
                 //@ts-ignore
                 doctor.password
               );
-              if (!passwordMatch) throw new Error("Invalid Credentials");
+              if(!doctor.verified) throw new Error('Admin verification is required')
+              else if(!passwordMatch) {
+                throw new Error("Password Did not Match");
+              }
               //@ts-ignore
               delete doctor.password;
               delete doctor.image;
@@ -99,7 +102,6 @@ export const authOptions: AuthOptions = {
     },
     //@ts-ignore
     async session({ session, token, user }) {
-      console.log('user session',token.user)
       return {
         ...session,
         user: token.user,

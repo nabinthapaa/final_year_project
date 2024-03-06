@@ -8,7 +8,6 @@ import Select from "react-select";
 import Prediction from "./components/Prediction";
 import Loader from "@/components/Loader";
 import {BASE_URL, PREDICT} from "@/app/api/api-constant/api-const";
-import {number} from "prop-types";
 
 interface ISymptoms {
     value: string;
@@ -22,7 +21,6 @@ function CheckSymptoms() {
     const [result, setResult] = useState<{} | undefined>();
     const [data, setData] = useState(null);
 
-    console.log('data',data)
 
     useEffect(() => {
             const fetchData = async () => {
@@ -39,12 +37,10 @@ function CheckSymptoms() {
                 }
             };
             fetchData();
-        console.log('data---',data)
     })
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('session',session)
         if (session) {
             const symptoms = [];
             for (const s of selectedOption){
@@ -80,7 +76,7 @@ function CheckSymptoms() {
                         <input
                             id="name"
                             name="name"
-                            value={'hello'}
+                            value={data ? data.firstName : ''}
                             onChange={(e) => {}}
                             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
                         />

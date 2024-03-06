@@ -61,19 +61,19 @@ export function DoctorTechnical({
           ))}
         </select>
       </label>
-      <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
-        <span>Department</span>
-        <input
-          id="department"
-          name="department"
-          placeholder="Enter your Department..."
-          type="text"
-          required
-          value={department}
-          onChange={(e) => updateFields({ department: e.target.value })}
-          className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
-        />
-      </label>
+      {/*<label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">*/}
+      {/*  <span>Department</span>*/}
+      {/*  <input*/}
+      {/*    id="department"*/}
+      {/*    name="department"*/}
+      {/*    placeholder="Enter your Department..."*/}
+      {/*    type="text"*/}
+      {/*    required*/}
+      {/*    value={department}*/}
+      {/*    onChange={(e) => updateFields({ department: e.target.value })}*/}
+      {/*    className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"*/}
+      {/*  />*/}
+      {/*</label>*/}
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Hospital</span>
         <input

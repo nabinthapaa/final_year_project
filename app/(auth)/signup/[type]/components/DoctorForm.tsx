@@ -86,18 +86,13 @@ export default function DoctorForm() {
       setLoading(true);
       validateDoctor(data);
       try {
-        const formData = new FormData();
-        console.log('data',data)
-        const { image, docs, ...otherdata } = data;
-        const { citizenship_id, nmc_certificate, ...otherdocs } = docs;
-        if (citizenship_id) formData.set("citizenship_id", citizenship_id);
-        if (nmc_certificate) formData.set("nmc_certificate", nmc_certificate);
-        if (data.image) formData.set("image", data.image);
-        formData.set("otherinfo", JSON.stringify({ ...otherdata }));
-        formData.set("otherdocs", JSON.stringify({ ...otherdocs }));
+        console.log('data',data);
         const res = await axios.post("/api/register/doctor", data);
         if (res.status === 200) {
           router.replace("/login");
+        }else if(res.status === 200){
+          router.replace("/login");
+          alert('Verification from Admin is required')
         } else {
           alert("Something Went wrong");
         }

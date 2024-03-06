@@ -33,10 +33,9 @@ function LoginPage() {
         type,
         redirect: false,
       });
-      console.log('==========>',res)
       if (res?.ok) router.replace("/profile");
-      if (res?.error) {
-        alert("Invalid Credentials");
+      if (res?.status === 401) {
+        alert("Admin Verification is required");
         return;
       }
     } catch (error) {
