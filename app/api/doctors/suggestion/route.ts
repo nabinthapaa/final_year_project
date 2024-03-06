@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
         const doctors = await Doctor.find({ specialization: dept })
             .select("-password")
             .lean();
-        console.log("Logging Docotors:", doctors);
         const doc_id = doctors.map((doctor) => doctor.doc_id);
         const nmcData = await DoctorDocs.find({
             _id: { $in: doc_id },

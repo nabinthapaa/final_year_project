@@ -90,3 +90,22 @@
 [data-disabled=true]{
     pointer-events: none;
 }
+
+
+.doctor-table{
+    display: grid;
+    grid-template-columns: 0.2fr 0.8fr repeat(3, 1fr) 0.5fr;
+    place-items: center;
+
+    & span{
+        font-size: 1.125rem;
+    }
+
+    & img:hover{
+        position: absolute;
+        scale: 6;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

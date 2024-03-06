@@ -53,10 +53,9 @@ const DoctorSchema = new Schema(
       type: Number,
       required: true,
     },
-    department: {
-      type: String,
-      required: true,
-      index: true,
+    verified:{
+        type: Boolean,
+        default: false
     },
     hospital: {
       type: String,

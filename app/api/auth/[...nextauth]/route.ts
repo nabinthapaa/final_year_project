@@ -21,6 +21,8 @@ export const authOptions: AuthOptions = {
             try {
               await ConnectToDB();
               const doctor = await Doctor.findOne({ email }).lean();
+              //@ts-ignore
+              if(!doctor?.verified) throw new Error("Pending Verification");
               if (!doctor) return null;
               const passwordMatch = await bcrypt.compare(
                 password,
@@ -29,7 +31,7 @@ export const authOptions: AuthOptions = {
               );
               if (!passwordMatch) throw new Error("Invalid Credentials");
               //@ts-ignore
-              delete doctor.password;
+              delete doctor?.password;
 
               return { ...doctor, type };
             } catch (error) {
@@ -42,7 +44,6 @@ export const authOptions: AuthOptions = {
               await ConnectToDB();
               const user = await User.findOne({ email }).lean();
               if (!user) return null;
-              console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
