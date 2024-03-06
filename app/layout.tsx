@@ -2,6 +2,7 @@ import DefaultNav from "@/components/Nav/DefaultNav";
 import type { Metadata } from "next";
 import { AuthProvider } from "./Providers";
 import "./globals.css";
+import loading from "@/app/loading";
 
 export const metadata: Metadata = {
   title: "Create Next App",

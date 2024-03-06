@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import {redirect, RedirectType, useRouter} from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import {
   INVALID_AGE,
@@ -11,16 +11,17 @@ import { useMultistepForm } from "../hooks/useMultistepForm";
 import { UserFormData } from "../types/FormTypes";
 import { AccountForm } from "./AccountForm";
 import { PersonalForm } from "./PersonalForm";
+import axios from "axios";
 
 const INITIAL_DATA: UserFormData = {
-  firstName: "",
-  lastName: "",
-  age: "",
-  gender: "",
-  address: "",
-  email: "",
-  password: "",
-  repassword: "",
+  firstName: "test",
+  lastName: "test",
+  age: "20",
+  gender: "male",
+  address: "gwarko",
+  email: "test@gmail.com",
+  password: "test",
+  repassword: "test",
   image: null,
 };
 
@@ -59,20 +60,9 @@ function UserForm() {
     try {
       validateUser(data);
       try {
-        const formData = new FormData();
-        const { image, ...otherdata } = data;
-        if (data.image) formData.set("image", data.image);
-        formData.set("otherinfo", JSON.stringify({ ...otherdata }));
-        const res = await fetch("/api/register/user", {
-          method: "POST",
-          body: formData,
-        });
-        if (res.ok) {
-          alert("Account Succesfully created");
-          router.replace("/dashboard");
-        } else {
-          alert("Something Went wrong");
-        }
+        const res = await axios.post("/api/register/user", data);
+        if(res.status === 200) router.replace('/login')
+
       } catch (error) {
         if (error instanceof Error)
           alert(JSON.stringify({ error: error.message }));

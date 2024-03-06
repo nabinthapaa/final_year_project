@@ -90,3 +90,11 @@
 [data-disabled=true]{
     pointer-events: none;
 }
+
+.display-center{
+  height: 95vh;
+  width: 95vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

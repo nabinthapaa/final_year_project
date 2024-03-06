@@ -1,43 +1,48 @@
 import mongoose, { Schema, models } from "mongoose";
+import {number} from "prop-types";
 
 const UserSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
+    {
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        image: {
+            type: String,
+        },
+        age: {
+            type: Number,
+            required: true,
+        },
+        phone: {
+            type: Number,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+        },
+        gender: {
+            type: String,
+            default: "not-specified",
+        },
+        userId: {
+            type: Number,
+            required: true
+        }
     },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: String,
-    },
-    age: {
-      type: Number,
-      required: true,
-    },
-    phone: {
-      type: Number,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-    },
-    gender: {
-      type: String,
-      default: "not-specified",
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
 const User = models.User || mongoose.model("User", UserSchema);

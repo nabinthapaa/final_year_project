@@ -30,6 +30,7 @@ export const authOptions: AuthOptions = {
               if (!passwordMatch) throw new Error("Invalid Credentials");
               //@ts-ignore
               delete doctor.password;
+              delete doctor.image;
 
               return { ...doctor, type };
             } catch (error) {
@@ -42,7 +43,6 @@ export const authOptions: AuthOptions = {
               await ConnectToDB();
               const user = await User.findOne({ email }).lean();
               if (!user) return null;
-              console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
@@ -52,6 +52,7 @@ export const authOptions: AuthOptions = {
 
               //@ts-ignore
               delete user.password;
+              delete user.image;
 
               return { ...user, type };
             } catch (error) {
@@ -81,12 +82,15 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       try {
-        if (user) {
+        if (user.type === 'user') {
           token.user = {
-            ...user,
+            id: user.userId,
           };
+        }else if(user.type === 'doctor'){
+          token.doctor = {
+            id: user.doctorId,
+          }
         }
-
         return token;
       } catch (error) {
         console.error("JWT Callback Error:", error);
@@ -95,10 +99,11 @@ export const authOptions: AuthOptions = {
     },
     //@ts-ignore
     async session({ session, token, user }) {
+      console.log('user session',token.user)
       return {
         ...session,
         user: token.user,
-        ...token,
+        doctor: token.doctor,
       };
     },
   },

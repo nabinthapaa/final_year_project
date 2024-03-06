@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import Loading from "@/app/loading";
 
 export default function Home() {
+  // return <Loading/>
   return (
     <>
-      <div className="  px-10 pt-24">
+      <div className="px-10 pt-24">
         <div className="grid grid-cols-2">
           <div className="text-text">
             <h1 className="font-bold text-[50px]">

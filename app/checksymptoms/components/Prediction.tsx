@@ -14,6 +14,7 @@ export default function Prediction({
   predicteddisease,
   consultdoctor,
 }: PredictionProps) {
+  console.log('prediction')
   return (
     <div className="mt-10 px-10">
       <div className="flex w-full justify-around border-teal border-2 rounded-xl p-10">

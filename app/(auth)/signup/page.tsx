@@ -9,7 +9,7 @@ import GlassCard from "./[type]/components/GlassCard";
 export default function SignUP() {
   const { data: session } = useSession();
   const router = useRouter();
-  if (session) router.replace("/profile");
+  // if (session) router.replace("/profile");
   return (
     <div className="px-10 mt-[20vh] flex items-center justify-center gap-[10vh]">
       <GlassCard>

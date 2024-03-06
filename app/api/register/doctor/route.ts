@@ -1,5 +1,4 @@
 import { ConnectToDB } from "@/libs/connectToDB";
-import { saveImage } from "@/libs/saveImage";
 import Doctor from "@/models/Doctor";
 import DoctorDocs from "@/models/DoctorDocs";
 import { hash } from "bcrypt";
@@ -21,9 +20,10 @@ async function createDoctor(data: any): Promise<string> {
         specialization: data.specialization,
         experience: data.experience,
         department: data.department,
-        image: data.image_url,
+        image: data.image,
         address: data.address,
         gender: data.gender,
+        doctorId: data.doctorId
     });
     return doctor._id;
 }
@@ -38,20 +38,16 @@ async function createDoctorDocs(docs_info: any): Promise<void> {
 
 export async function POST(req: NextRequest, res: NextResponse) {
     try {
-        const form_data = await req.formData();
-        const citizenship = form_data.get("citizenship_id") as unknown as File;
-        const nmc_certificate = form_data.get("nmc_certificate") as unknown as File;
-        const image = form_data.get("image") as unknown as File;
-        const data = JSON.parse(form_data.get("otherinfo") as unknown as string);
-        const docs_info = JSON.parse(
-            form_data.get("otherdocs") as unknown as string
-        );
-        data.image_url = await saveImage(image);
-        docs_info.citizenship_id = await saveImage(citizenship);
-        docs_info.nmc_certificate = await saveImage(nmc_certificate);
-
+        const data = await req.json();
+        data.doctorId = Math.ceil(Math.random() * 10000);
         const id = await createDoctor(data);
-        docs_info.doctorId = id;
+        const docs_info = {
+            citizenship: data.docs.citizenship,
+            citizenship_id: data.docs.citizenship_id,
+            nmc_no: data.docs.nmc_no,
+            nmc_certificate: data.docs.nmc_certificate,
+            doctorId: id
+        }
         try {
             const document_id = await createDoctorDocs(docs_info);
             await ConnectToDB();
@@ -67,7 +63,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json(
             { message: "Account created Successfully" },
-            { status: 201 }
+            { status: 200 }
         );
     } catch (error:any) {
         if (error instanceof Error)

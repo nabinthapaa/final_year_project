@@ -2,10 +2,12 @@
 import Remove from "@/utils/remove";
 import { symptoms } from "@/utils/symptoms";
 import { useSession } from "next-auth/react";
+import axios from 'axios';
 import { FormEvent, useState } from "react";
 import Select from "react-select";
 import Prediction from "./components/Prediction";
 import Loader from "@/components/Loader";
+import {BASE_URL, PREDICT} from "@/app/api/api-constant/api-const";
 
 interface ISymptoms {
     value: string;
@@ -24,7 +26,7 @@ export default function CheckSymptoms() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (session) {
-            const symptoms = []
+            const symptoms = [];
             for (const s of selectedOption){
                 symptoms.push(s.label);
             }
@@ -34,13 +36,9 @@ export default function CheckSymptoms() {
         try {
             const formData = new FormData();
             formData.set("symptoms", JSON.stringify(selectedOption));
-            const res = await fetch("/api/diseases", {
-                method: "POST",
-                body: formData,
-            });
-            const { data } = await res.json();
-            setResult(data);
-            document.cookie=`suspectedDisease=${data.predicteddisease}`
+            const res = await axios.post(BASE_URL + PREDICT, formData);
+            setResult(res.data);
+            document.cookie=`suspectedDisease=${res.data.predicteddisease}`
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error.message);

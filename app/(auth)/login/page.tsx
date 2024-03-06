@@ -19,7 +19,6 @@ const loginInputs = [
 ];
 
 function LoginPage() {
-  const { data: session } = useSession();
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,6 +33,7 @@ function LoginPage() {
         type,
         redirect: false,
       });
+      console.log('==========>',res)
       if (res?.ok) router.replace("/profile");
       if (res?.error) {
         alert("Invalid Credentials");
@@ -41,12 +41,12 @@ function LoginPage() {
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.message);
+        console.log(error);
       }
     }
   };
 
-  if (session) router.replace("/profile");
+  // if (session) router.replace("/profile");
   return (
     <form
       className="max-w-[650px] min-w-[300px] px-10 mx-auto space-y-4 my-[30px]"

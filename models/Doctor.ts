@@ -64,7 +64,11 @@ const DoctorSchema = new Schema(
     doc_id:{
         type: Schema.Types.ObjectId,
         ref: "doctordocs"
-    }
+    },
+      doctorId: {
+          type: Number,
+          required: true
+      }
   },
   { timestamps: true }
 );

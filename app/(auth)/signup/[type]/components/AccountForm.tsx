@@ -59,7 +59,7 @@ export function AccountForm({
           updateFields({ ...image })
         }
         key_="image"
-        label="Uploade Picture"
+        label="Upload Picture"
       />
     </FormWrapper>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { redirect } from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 import { FormEvent, useState } from "react";
 import {
   INVALID_AGE,
@@ -12,26 +12,27 @@ import { AccountForm } from "./AccountForm";
 import DocotorDocs from "./DocotorDocs";
 import { DoctorTechnical } from "./DoctorTechnical";
 import { PersonalForm } from "./PersonalForm";
+import axios from "axios";
 
 const INITIAL_DATA: DoctorFormData = {
-  firstName: "",
-  lastName: "",
-  age: "",
-  qualification: "",
-  specialization: "",
-  department: "",
-  experience: "",
-  email: "",
-  password: "",
-  repassword: "",
+  firstName: "sagar",
+  lastName: "shah",
+  age: "33",
+  qualification: "mbbs",
+  specialization: "urologist",
+  department: "neuro",
+  experience: "2",
+  email: "sagar@gmail.com",
+  password: "sagar",
+  repassword: "sagar",
   image: null,
-  gender: "",
-  address: "",
-  hospital: "",
+  gender: "male",
+  address: "kalimati",
+  hospital: "star",
   docs: {
-    citizenship: undefined,
+    citizenship: 2342342,
     citizenship_id: null,
-    nmc_no: undefined,
+    nmc_no: 32423,
     nmc_certificate: null,
   },
 };
@@ -51,6 +52,7 @@ function validateDoctor(data: DoctorFormData) {
 export default function DoctorForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   function updateFields(fields: Partial<DoctorFormData>) {
     setData((prev) => {
       return { ...prev, ...fields };
@@ -79,13 +81,13 @@ export default function DoctorForm() {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(data);
     if (!isLastStep) return next();
     try {
       setLoading(true);
       validateDoctor(data);
       try {
         const formData = new FormData();
+        console.log('data',data)
         const { image, docs, ...otherdata } = data;
         const { citizenship_id, nmc_certificate, ...otherdocs } = docs;
         if (citizenship_id) formData.set("citizenship_id", citizenship_id);
@@ -93,12 +95,9 @@ export default function DoctorForm() {
         if (data.image) formData.set("image", data.image);
         formData.set("otherinfo", JSON.stringify({ ...otherdata }));
         formData.set("otherdocs", JSON.stringify({ ...otherdocs }));
-        const res = await fetch("/api/register/doctor", {
-          method: "POST",
-          body: formData,
-        });
-        if (res.ok) {
-          redirect("/login");
+        const res = await axios.post("/api/register/doctor", data);
+        if (res.status === 200) {
+          router.replace("/login");
         } else {
           alert("Something Went wrong");
         }

@@ -3,10 +3,11 @@ import Link from "next/link";
 import React from "react";
 
 export default function ProfileCard({ data }: any) {
+
   return (
     <div className="profile-card border-accent">
       <div className="profile-image relative w-48 h-48 rounded-full overflow-hidden">
-        <Image src={data.image} alt={data.firstName} fill />
+        <Image src={data.image}  alt={data.firstName} fill />
       </div>
       <div className="profile-name">{data.firstName + " " + data.lastName}</div>
       <div className="profile-info">

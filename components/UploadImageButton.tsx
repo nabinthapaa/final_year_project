@@ -1,18 +1,19 @@
 "use client";
 import React, { useRef, useState } from "react";
+import {encodeImageFileAsURL} from "@/libs/saveImage";
 
-const ImageUploader = ({ image, handleChange, label, key_, required }: any) => {
+const ImageUploader = ({ image,handleChange,  label, key_, required }: any) => {
   const [imageName, setImageName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
-    if (file) {
-      handleChange({ [key_]: file });
+    if (!file) return;
+      const imageBase64 = await encodeImageFileAsURL(file);
+      handleChange({ [key_]: imageBase64 });
       setImageName(file.name);
       setImageFile(file);
-    }
   };
 
   const handleRemoveImage = () => {
@@ -33,7 +34,7 @@ const ImageUploader = ({ image, handleChange, label, key_, required }: any) => {
           ref={imageRef}
           name="image"
           type="file"
-          accept="image/*"
+          accept=".gif,.jpg,.jpeg,.png"
           className="sr-only"
           required={required}
           onChange={handleImageChange}
