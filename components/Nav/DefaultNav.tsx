@@ -1,5 +1,5 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import DoctorNav from "./DoctorNav";
 import UserNav from "./UserNav";
@@ -21,7 +21,7 @@ export default function DefaultNav() {
             <Link href="/checksymptoms">Check Symptoms</Link>
           </li>
           <li>
-            <Link href="#">Consult Doctor</Link>
+            <Link href="/consult-doctor">Consult Doctor</Link>
           </li>
           <li>
             <Link href="/login">Login</Link>

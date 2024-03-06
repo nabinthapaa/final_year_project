@@ -1,4 +1,6 @@
+"use client";
 import { printRelativeTime } from "@/libs/relativeTime";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -10,6 +12,7 @@ interface DoctorCard{
 }
 
 export default function DoctorCard({ data, showAppointment = true, children}: DoctorCard) {
+    const {data: session }  = useSession();
     return (
         <div className="rounded-lg h-fit min-w-[300px] w-fit flex flex-col items-center justify-center py-5 border-accent border-2 px-4">
             <div className="relative w-[80%] h-48 rounded-md overflow-hidden">
@@ -43,7 +46,7 @@ export default function DoctorCard({ data, showAppointment = true, children}: Do
             {showAppointment && (
                 <div className="mt-5">
                     <Link
-                        href={`/make-appointment?id=${data._id}`}
+                        href={session?.user ? `/make-appointment?id=${data._id}`:`/login`}
                         type="submit"
                         className="px-6 py-2 bg-accent rounded-lg font-bold w-full text-xl"
                     >

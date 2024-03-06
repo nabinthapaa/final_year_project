@@ -98,3 +98,15 @@
   justify-content: center;
   align-items: center;
 }
+
+.loader-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loader-label{
+  max-width: 150px;
+}

@@ -65,7 +65,6 @@ function CheckSymptoms() {
 
     return (
         <>
-            <Loader show={loading} />
             <form
                 className="mx-10 mt-10 w-fit h-fit max-w-[60vw] min-w-[20vw] space-y-4"
                 onSubmit={handleSubmit}
@@ -100,16 +99,21 @@ function CheckSymptoms() {
                     />
                 </label>
                 <button
-                    className="bg-teal px-10 font-bold py-2 rounded-full mt-5 disabled:bg-teal/30"
                     type="submit"
+                    className="bg-teal px-10 py-2 font-bold text-lg rounded-full disabled:opacity-50 disabled:grid disabled:grid-cols-[0.3fr,1fr] content-center"
                     disabled={loading}
                 >
-                    Predict
+                    {loading &&
+                        <Loader />
+                    }
+                    <div className='loader-center'>
+                        <span className="loader-label">{loading ? "Getting results" : "Predict"}</span>
+                    </div>
                 </button>
             </form>
             <div
                 className={`${result ? "opacity-100" : "translate-x-[-100vw] opacity-0"
-                } transition-all`}
+                    } transition-all`}
             >
                 <Prediction data={data} {...result} />
             </div>

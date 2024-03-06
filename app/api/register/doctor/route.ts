@@ -19,7 +19,6 @@ async function createDoctor(data: any): Promise<string> {
         qualification: data.qualification,
         specialization: data.specialization,
         experience: data.experience,
-        department: data.department,
         image: data.image,
         address: data.address,
         gender: data.gender,

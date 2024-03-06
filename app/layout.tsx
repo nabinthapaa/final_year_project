@@ -4,8 +4,8 @@ import { AuthProvider } from "./Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Disease Prediction",
-  description: "This system predict disease based on symptoms and recommend doctor",
+  title: "DiagnoSmart",
+  description: "A health assist system, Helps in finding doctors and diagnose disease",
 };
 
 export default function RootLayout({

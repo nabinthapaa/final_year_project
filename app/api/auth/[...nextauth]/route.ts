@@ -21,19 +21,17 @@ export const authOptions: AuthOptions = {
             try {
               await ConnectToDB();
               const doctor = await Doctor.findOne({ email }).lean();
+              //@ts-ignore
+              if(!doctor?.verified) throw new Error("Pending Verification");
               if (!doctor) return null;
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
                 doctor.password
               );
-              if(!doctor.verified) throw new Error('Admin verification is required')
-              else if(!passwordMatch) {
-                throw new Error("Password Did not Match");
-              }
+              if (!passwordMatch) throw new Error("Invalid Credentials");
               //@ts-ignore
               delete doctor.password;
-              delete doctor.image;
 
               return { ...doctor, type };
             } catch (error) {
@@ -44,18 +42,18 @@ export const authOptions: AuthOptions = {
           } else if (type === "user") {
             try {
               await ConnectToDB();
-              const user = await User.findOne({ email: email }).lean();
+              const user = await User.findOne({ email }).lean();
               if (!user) return null;
+              console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
                 user.password
               );
-              if (!passwordMatch) throw new Error("Invalid Credentials authorization");
+              if (!passwordMatch) throw new Error("Invalid Credentials");
 
               //@ts-ignore
               delete user.password;
-              delete user.image;
 
               return { ...user, type };
             } catch (error) {
@@ -85,15 +83,12 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       try {
-        if (user.type === 'user') {
+        if (user) {
           token.user = {
-            id: user.userId,
+            ...user,
           };
-        }else if(user.type === 'doctor'){
-          token.doctor = {
-            id: user.doctorId,
-          }
         }
+
         return token;
       } catch (error) {
         console.error("JWT Callback Error:", error);
@@ -105,7 +100,7 @@ export const authOptions: AuthOptions = {
       return {
         ...session,
         user: token.user,
-        doctor: token.doctor,
+        ...token,
       };
     },
   },
