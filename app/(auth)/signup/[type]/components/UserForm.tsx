@@ -14,14 +14,14 @@ import { PersonalForm } from "./PersonalForm";
 import axios from "axios";
 
 const INITIAL_DATA: UserFormData = {
-  firstName: "test",
-  lastName: "test",
-  age: "20",
-  gender: "male",
-  address: "gwarko",
-  email: "test@gmail.com",
-  password: "test",
-  repassword: "test",
+  firstName: "",
+  lastName: "",
+  age: "",
+  gender: "",
+  address: "",
+  email: "",
+  password: "",
+  repassword: "",
   image: null,
 };
 

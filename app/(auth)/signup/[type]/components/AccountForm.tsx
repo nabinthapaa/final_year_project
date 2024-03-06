@@ -28,7 +28,7 @@ export function AccountForm({
         />
       </label>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
-        <span>Password</span>
+        <span>New Password</span>
         <input
           id="password"
           name="password"
@@ -41,7 +41,7 @@ export function AccountForm({
         />
       </label>
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
-        <span>Password</span>
+        <span>Confirm Password</span>
         <input
           id="repassword"
           name="repassword"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 export default function DoctorNav({ session }: any) {
+    console.log('doctor session',session)
   return (
     <div className=" text-accent text-3xl font-bold h-16 flex justify-between items-center border-b-[1px] border-text ">
       <p className="pl-10">
@@ -12,7 +13,7 @@ export default function DoctorNav({ session }: any) {
         <li>
           <Link href="/appointments">Appointments</Link>
         </li>
-        {!session?.user ? (
+        {!session?.doctor ? (
           <li>
             <Link href="/login">Login</Link>
           </li>

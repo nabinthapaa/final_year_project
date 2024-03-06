@@ -3,28 +3,48 @@ import Remove from "@/utils/remove";
 import { symptoms } from "@/utils/symptoms";
 import { useSession } from "next-auth/react";
 import axios from 'axios';
-import { FormEvent, useState } from "react";
+import {FormEvent, useEffect, useState} from "react";
 import Select from "react-select";
 import Prediction from "./components/Prediction";
 import Loader from "@/components/Loader";
 import {BASE_URL, PREDICT} from "@/app/api/api-constant/api-const";
+import {number} from "prop-types";
 
 interface ISymptoms {
     value: string;
     label: string;
 }
 
-export default function CheckSymptoms() {
+function CheckSymptoms() {
     const { data: session } = useSession();
     const [selectedOption, setSelectedOption] = useState<ISymptoms[]>([]);
-    const [name, setName] = useState<string>(
-        session?.user ? `${session?.user?.firstName} ${session?.user.lastName}` : ""
-    );
     const [loading, setLoading] = useState<boolean>(false);
     const [result, setResult] = useState<{} | undefined>();
+    const [data, setData] = useState(null);
+
+    console.log('data',data)
+
+    useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    if (session && session.user) {
+                        const userDetail = await axios.get(`/api/user/${session.user.id}`);
+                        setData(userDetail.data.data);
+                    } else if (session && session.doctor) {
+                        const doctorDetail = await axios.get(`/api/doctor/${session.doctor.id}`);
+                        setData(doctorDetail.data.data);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user/doctor details:', error);
+                }
+            };
+            fetchData();
+        console.log('data---',data)
+    })
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log('session',session)
         if (session) {
             const symptoms = [];
             for (const s of selectedOption){
@@ -60,8 +80,8 @@ export default function CheckSymptoms() {
                         <input
                             id="name"
                             name="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={'hello'}
+                            onChange={(e) => {}}
                             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
                         />
                     </label>
@@ -93,10 +113,13 @@ export default function CheckSymptoms() {
             </form>
             <div
                 className={`${result ? "opacity-100" : "translate-x-[-100vw] opacity-0"
-                    } transition-all`}
+                } transition-all`}
             >
-                <Prediction name={name} {...result} />
+                <Prediction data={data} {...result} />
             </div>
         </>
     );
 }
+
+
+export default CheckSymptoms;

@@ -13,7 +13,7 @@ export default function UserNav({ session }: any) {
           <Link href="/checksymptoms">Check Symptoms</Link>
         </li>
         <li>
-          <Link href="#">Consult Doctor</Link>
+          <Link href="#/consultDoctor">Consult Doctor</Link>
         </li>
         {!session?.user ? (
           <li>

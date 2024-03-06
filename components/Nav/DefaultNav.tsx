@@ -6,9 +6,10 @@ import UserNav from "./UserNav";
 
 export default function DefaultNav() {
   const { data: session } = useSession();
-  if (session?.user?.type === "user") {
+  console.log('session nav',session)
+  if (session?.user) {
     return <UserNav session={session} />;
-  } else if (session?.user?.type) {
+  } else if (session?.doctor) {
     return <DoctorNav session={session} />;
   } else {
     return (

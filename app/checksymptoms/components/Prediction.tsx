@@ -2,25 +2,25 @@ import Link from "next/link";
 import React from "react";
 
 type PredictionProps = {
-  name: string;
+  data: any;
   confidencescore?: number;
   predicteddisease?: string;
   consultdoctor?: string;
 };
 
 export default function Prediction({
-  name,
+  data,
   confidencescore,
   predicteddisease,
   consultdoctor,
 }: PredictionProps) {
-  console.log('prediction')
+  console.log('prediction' ,data)
   return (
     <div className="mt-10 px-10">
       <div className="flex w-full justify-around border-teal border-2 rounded-xl p-10">
         <div className="left text-xl max-w-[600px] py-2 min-w-[300px] w-[600px] font-bold text-text space-y-4 px-2">
           <p>
-            Patient Name: <span className="text-accent">{name}</span>
+            Patient Name: <span className="text-accent">{data?.firstName+ ' '+  data?.lastName}</span>
           </p>
           <p>
             Predicted Disease: <span>{predicteddisease}</span>
