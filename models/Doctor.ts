@@ -61,6 +61,10 @@ const DoctorSchema = new Schema(
     hospital: {
       type: String,
     },
+    doc_id:{
+        type: Schema.Types.ObjectId,
+        ref: "doctordocs"
+    }
   },
   { timestamps: true }
 );

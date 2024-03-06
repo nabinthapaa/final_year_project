@@ -24,7 +24,7 @@ const DoctorDocsSchema = new Schema(
     },
     doctorId: {
       type: Schema.Types.ObjectId,
-      ref: "Doctor",
+      ref: "doctor",
       unique: true,
     },
   },

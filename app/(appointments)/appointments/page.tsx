@@ -18,9 +18,11 @@ async function page() {
   if (session?.user.type === "user") {
     redirect("/my-appointment");
   }
+
   return (
     <div className="container mx-auto mt-4">
-      <h1 className="text-text font-bold text-3xl">Appointments</h1>
+      <h1 className="text-text font-bold text-3xl text-center">Appointments</h1>
+      { (data.length === 0 || !data) && <p className="text-center font-bold text-text text-lg">No appoiments at the moment</p>}
       <div className="mt-4 flex flex-wrap gap-6">
         {data.map((d: any) => {
           return (
@@ -58,6 +60,9 @@ async function page() {
                   </span>{" "}
                   {parseDate(getDate(d.meetingTime))}
                 </p>
+                <div className="w-[80%] h-[20px] mt-4">
+                    <Link href={`/appointments/view-more?id=${d._id}`} className="bg-accent text-text text-bold px-4 py-2"> View More </Link>
+                </div>
               </div>
             </div>
           );
