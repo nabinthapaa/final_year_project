@@ -6,7 +6,7 @@ export function ConnectToDB() {
     try {
         if (!is_connected) {
             mongoose.connect(process.env.MONGODB_URL || "", {
-                dbName: "major_project",
+                dbName: "disease_prediction",
             });
             console.log("Connected to Database on ", new Date().toTimeString());
             is_connected = true

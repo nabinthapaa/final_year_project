@@ -25,7 +25,7 @@ async function Profile() {
 
     return (
         <div className="text-white">
-            <ProfileCard data={data} />
+            { data ? <ProfileCard data={data} /> : ''}
         </div>
     );
 }

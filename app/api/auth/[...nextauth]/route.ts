@@ -41,14 +41,14 @@ export const authOptions: AuthOptions = {
           } else if (type === "user") {
             try {
               await ConnectToDB();
-              const user = await User.findOne({ email }).lean();
+              const user = await User.findOne({ email: email }).lean();
               if (!user) return null;
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
                 user.password
               );
-              if (!passwordMatch) throw new Error("Invalid Credentials");
+              if (!passwordMatch) throw new Error("Invalid Credentials authorization");
 
               //@ts-ignore
               delete user.password;
