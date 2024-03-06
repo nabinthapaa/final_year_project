@@ -29,9 +29,10 @@ export const authOptions: AuthOptions = {
                 //@ts-ignore
                 doctor.password
               );
-              if (!passwordMatch) throw new Error("Invalid Credentials");
+              if (!passwordMatch) throw new Error("Password Did not Match");
               //@ts-ignore
               delete doctor.password;
+              delete doctor.image;
 
               return { ...doctor, type };
             } catch (error) {
@@ -44,16 +45,16 @@ export const authOptions: AuthOptions = {
               await ConnectToDB();
               const user = await User.findOne({ email }).lean();
               if (!user) return null;
-              console.log("Authorize: ", user);
               const passwordMatch = await bcrypt.compare(
                 password,
                 //@ts-ignore
                 user.password
               );
-              if (!passwordMatch) throw new Error("Invalid Credentials");
+              if (!passwordMatch) throw new Error("Invalid Credentials authorization");
 
               //@ts-ignore
               delete user.password;
+              delete user.image;
 
               return { ...user, type };
             } catch (error) {
@@ -83,12 +84,16 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       try {
-        if (user) {
-          token.user = {
-            ...user,
-          };
-        }
-
+        if (user.type === 'user') {
+            token.user = {
+              id: user.userId,
+              ...user,
+            }
+          }else if(user.type === 'doctor'){
+            token.doctor = {
+              id: user.doctorId,
+            }
+          }
         return token;
       } catch (error) {
         console.error("JWT Callback Error:", error);
@@ -100,7 +105,7 @@ export const authOptions: AuthOptions = {
       return {
         ...session,
         user: token.user,
-        ...token,
+        doctor: token.doctor,
       };
     },
   },

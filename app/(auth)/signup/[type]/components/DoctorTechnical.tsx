@@ -31,9 +31,9 @@ export function DoctorTechnical({
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Experience</span>
         <input
-          id="specialization"
-          name="specialization"
-          placeholder="Enter your Specialization..."
+          id="experience"
+          name="experience"
+          placeholder="Enter your Experience..."
           type="text"
           required
           value={experience}
@@ -44,8 +44,8 @@ export function DoctorTechnical({
       <label className="space-y-2 font-bold text-2xl flex flex-col items-left  w-full">
         <span>Specialization</span>
         <select
-          id="gender"
-          name="gender"
+          id="specialization"
+          name="specialization"
           required
           value={specialization}
           onChange={(e) => updateFields({ specialization: e.target.value })}
