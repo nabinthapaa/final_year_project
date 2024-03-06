@@ -1,7 +1,8 @@
 "use client";
+import Loader from "@/components/Loader";
 import { signIn, useSession } from "next-auth/react";
-import { RedirectType, redirect, useRouter } from "next/navigation";
-import React, { FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 
 const loginInputs = [
   {
@@ -21,6 +22,7 @@ const loginInputs = [
 function LoginPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [loading, setLoading ] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ function LoginPage() {
     const password: string = e.currentTarget.password.value;
     const type: string = e.currentTarget.type.value;
     try {
+        setLoading(true);
       const res = await signIn("credentials", {
         email,
         password,
@@ -43,6 +46,8 @@ function LoginPage() {
       if (error instanceof Error) {
         console.log(error.message);
       }
+    }finally{
+        setLoading(false);
     }
   };
 
@@ -84,9 +89,13 @@ function LoginPage() {
       </label>
       <button
         type="submit"
-        className="px-5 py-4 bg-accent rounded-lg font-bold w-full text-xl"
+        className="px-5 py-4 bg-accent rounded-lg font-bold w-full text-xl disabled:opacity-75 content-center disabled:grid disabled:grid-cols-[0.2fr,1fr]"
+        disabled= {loading}
       >
-        Login
+      {loading && <div className="relative ml-10">
+          <Loader />
+      </div>}
+      <span className="">{loading?"Logging in.." : "Log in"}</span>
       </button>
     </form>
   );

@@ -25,7 +25,7 @@ export default function CheckSymptoms() {
         e.preventDefault();
         if (session) {
             const symptoms = []
-            for (const s of selectedOption){
+            for (const s of selectedOption) {
                 symptoms.push(s.label);
             }
             document.cookie = `symptoms=${JSON.stringify(symptoms)}`;
@@ -40,7 +40,7 @@ export default function CheckSymptoms() {
             });
             const { data } = await res.json();
             setResult(data);
-            document.cookie=`suspectedDisease=${data.predicteddisease}`
+            document.cookie = `suspectedDisease=${data.predicteddisease}`
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error.message);
@@ -51,7 +51,6 @@ export default function CheckSymptoms() {
 
     return (
         <>
-            <Loader show={loading} />
             <form
                 className="mx-10 mt-10 w-fit h-fit max-w-[60vw] min-w-[20vw] space-y-4"
                 onSubmit={handleSubmit}
@@ -86,11 +85,14 @@ export default function CheckSymptoms() {
                     />
                 </label>
                 <button
-                    className="bg-teal px-10 font-bold py-2 rounded-full mt-5 disabled:bg-teal/30"
                     type="submit"
+                    className="bg-teal px-10 py-2 font-bold text-lg rounded-full disabled:opacity-50 disabled:grid disabled:grid-cols-[0.3fr,1fr] content-center"
                     disabled={loading}
                 >
-                    Predict
+                    {loading && <div className="relative">
+                        <Loader />
+                    </div>}
+                    <span className="">{loading ? "Getting results..." : "Predict"}</span>
                 </button>
             </form>
             <div
