@@ -12,7 +12,7 @@ export default function SignUpForm({ params }: { params: { type: string } }) {
         <UserForm />
       ) : (
         redirect("/", RedirectType.replace)
-      )}ex
+      )}
     </div>
   );
 }

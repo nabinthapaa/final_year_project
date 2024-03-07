@@ -6,7 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
     try {
         const searchParams = req.nextUrl.searchParams;
-        const dept = searchParams.get("dept");
+        let dept = searchParams.get("dept") as string;
+        dept = dept.toLowerCase();
         await ConnectToDB();
 
         const doctors = await Doctor.find({ specialization: dept })

@@ -3,11 +3,15 @@ import React, {useEffect, useState} from 'react';
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Select, MenuItem } from '@mui/material';
 import axios from "axios";
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 const AdminVerificationPage = () => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const { data: session } = useSession();
+    const router = useRouter();
     const [data, setData] = useState([]);
+
+
 
     const fetchData = async () => {
         try {
@@ -18,7 +22,10 @@ const AdminVerificationPage = () => {
         }
     }
     useEffect(() => {
-
+        const adminSession = sessionStorage.getItem('admin');
+        if(adminSession !== 'true'){
+            router.replace('/admin/login')
+        }
        fetchData();
 
     },[]);
