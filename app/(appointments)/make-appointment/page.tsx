@@ -11,8 +11,7 @@ async function checkAppoinment(id: string): Promise<boolean> {
     ConnectToDB();
     const appointment = await Appointment.find({ user: id, status: "booked" }).lean();
     console.log(appointment, new Date().toTimeString())
-    if (appointment.length !== 0) return true;
-    else return false;
+    return appointment.length !== 0;
 };
 
 export const fetchCache = 'force-no-store';
@@ -26,7 +25,7 @@ export default async function page({
     const session = await getServerSession(authOptions);
     if (!session) redirect("/");
 
-    if (session?.user?.type === "doctor") redirect("/appointments");
+    if (session.doctor) redirect("/appointments");
     //@ts-ignore
     const is_appointment_present = await checkAppoinment(session.user._id);
     console.log("IS APPOINTMENT MADE: ", is_appointment_present);
@@ -36,10 +35,7 @@ export default async function page({
         const res = await fetch(
             `${process.env.BASE_URL}/api/make-appointment?id=${id}`
         );
-
         const { data } = await res.json();
-
-
         return <MakeAppointment doctor={data} />;
     }
 }

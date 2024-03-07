@@ -27,7 +27,7 @@ export default function MakeAppointment({ doctor }: any) {
                 body: JSON.stringify({
                     meetingTime: time,
                     doctor: doctor._id,
-                    user: session?.user._id,
+                    user: session.id,
                     symptoms,
                     suspectedDisease
                 }),

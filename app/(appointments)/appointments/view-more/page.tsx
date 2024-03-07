@@ -39,7 +39,6 @@ async function getAppointmentDetails(id: string) {
     const appointment = await Appointment.findById(id).lean();
     //@ts-ignore
     appointment.user = await User.findById(appointment.user).lean();
-    console.log(appointment)
     return JSON.stringify(appointment);
 }
 

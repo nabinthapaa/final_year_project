@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         const data = await req.json();
+        console.log("data----", data)
         await ConnectToDB();
         const appointment = await Appointment.findOne({ user: data.user, status: "booked" });
         console.log("Pending Appointment: ", appointment);
@@ -52,6 +53,29 @@ export async function POST(req: NextRequest) {
                 status: 404,
             });
         }
+    } catch (error) {
+        if (error instanceof Error) {
+            return NextResponse.json({
+                message: error.message,
+                status: 404,
+            });
+        }
+    }
+}
+
+export async function PATCH(req: NextRequest) {
+    try {
+        const data = await req.json();
+        console.log("data----", data)
+        await ConnectToDB();
+        const appointment = await Appointment.findById(data.id);
+        appointment.status ="completed";
+        appointment.save();
+        console.log("Appointment Saved")
+        return NextResponse.json({
+            message: "Updated as completed",
+            status:200,
+        });
     } catch (error) {
         if (error instanceof Error) {
             return NextResponse.json({
