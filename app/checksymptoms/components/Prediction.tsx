@@ -6,6 +6,7 @@ type PredictionProps = {
   confidencescore?: number;
   predicteddisease?: string;
   consultdoctor?: string;
+  name: string;
 };
 
 export default function Prediction({
@@ -13,6 +14,7 @@ export default function Prediction({
   confidencescore,
   predicteddisease,
   consultdoctor,
+    name
 }: PredictionProps) {
   console.log('prediction' ,data)
   return (
@@ -20,7 +22,7 @@ export default function Prediction({
       <div className="flex w-full justify-around border-teal border-2 rounded-xl p-10">
         <div className="left text-xl max-w-[600px] py-2 min-w-[300px] w-[600px] font-bold text-text space-y-4 px-2">
           <p>
-            Patient Name: <span className="text-accent">{data?.firstName+ ' '+  data?.lastName}</span>
+            Patient Name: <span className="text-accent">{name}</span>
           </p>
           <p>
             Predicted Disease: <span>{predicteddisease}</span>

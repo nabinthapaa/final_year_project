@@ -4,13 +4,6 @@ import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper
 import axios from "axios";
 import {useSession} from "next-auth/react";
 
-// Example data (replace with actual data)
-const users = [
-    { id: 1, name: 'John Doe', age: 30, sex: 'Male', address: '123 Main St', nmc: '123456', nmcImage: 'nmc.jpg', citizenship: 'ABC123', status: 'pending' },
-    { id: 2, name: 'Jane Smith', age: 25, sex: 'Female', address: '456 Elm St', nmc: '654321', nmcImage: 'nmc.jpg', citizenship: 'XYZ789', status: 'verified' },
-    // Add more users as needed
-];
-
 const AdminVerificationPage = () => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const { data: session } = useSession();
@@ -37,7 +30,6 @@ const AdminVerificationPage = () => {
             status: verification
         }
         const response = await axios.post('api/doctor',payload);
-        console.log('response::::::::::',response)
         if(response.status === 200) {
             alert('updated successfully');
             fetchData();
@@ -72,7 +64,7 @@ const AdminVerificationPage = () => {
                             <TableCell>{user.nmc_no}</TableCell>
                             <TableCell><img src={user.nmc_certificate} alt="NMC Image" style={{ width: 50 }} /></TableCell>
                             <TableCell>{user.citizenship}</TableCell>
-                            <TableCell><img src={user.nmc_certificate} alt="citizenship Image" style={{ width: 50 }} /></TableCell>
+                            <TableCell><img src={user.citizenship_id} alt="citizenship Image" style={{ width: 50 }} /></TableCell>
                             <TableCell>
                                 <Select
                                     value={user.verified}

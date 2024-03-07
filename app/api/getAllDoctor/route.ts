@@ -5,9 +5,7 @@ import DoctorDocs from "@/models/DoctorDocs";
 
 export async function GET(req: Request){
     try{
-        console.log('hello')
         await ConnectToDB();
-        console.log('database connected in all doctor list')
         const doctorList = await Doctor.find();
         if(!doctorList) return NextResponse.json({
             message: 'Doctors not found'

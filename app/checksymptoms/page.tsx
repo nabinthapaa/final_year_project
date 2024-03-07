@@ -20,6 +20,7 @@ function CheckSymptoms() {
     const [loading, setLoading] = useState<boolean>(false);
     const [result, setResult] = useState<{} | undefined>();
     const [data, setData] = useState(null);
+    const [name,setName] = useState<string>(null);
 
 
     useEffect(() => {
@@ -28,16 +29,20 @@ function CheckSymptoms() {
                     if (session && session.user) {
                         const userDetail = await axios.get(`/api/user/${session.user.id}`);
                         setData(userDetail.data.data);
+                        const fullName = userDetail.data.data.firstName + ' ' + userDetail.data.data.lastName;
+                        setName(fullName);
                     } else if (session && session.doctor) {
                         const doctorDetail = await axios.get(`/api/doctor/${session.doctor.id}`);
                         setData(doctorDetail.data.data);
+                        const doctorName = doctorDetail.data.data.firstName + ' ' + doctorDetail.data.data.lastName;
+                        setName(doctorName);
                     }
                 } catch (error) {
                     console.error('Error fetching user/doctor details:', error);
                 }
             };
             fetchData();
-    })
+    },[])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -75,8 +80,8 @@ function CheckSymptoms() {
                         <input
                             id="name"
                             name="name"
-                            value={data ? data.firstName : ''}
-                            onChange={(e) => {}}
+                            value={name}
+                            onChange={(e) => {setName(e.target.value)}}
                             className="rounded-lg bg-text/0 px-2 py-3 outline-accent outline-2 border border-accent focus:outline-4 focus:border-0 text-lg text-text"
                         />
                     </label>
@@ -115,7 +120,7 @@ function CheckSymptoms() {
                 className={`${result ? "opacity-100" : "translate-x-[-100vw] opacity-0"
                     } transition-all`}
             >
-                <Prediction data={data} {...result} />
+                <Prediction data={data} {...result} name={name} />
             </div>
         </>
     );

@@ -37,7 +37,7 @@ function LoginPage() {
         redirect: false,
       });
       if (res?.ok) router.replace("/profile");
-      if (res?.status === 401) {
+      if (res?.status === 401 && res.doctor) {
         alert("Admin Verification is required");
         return;
       }

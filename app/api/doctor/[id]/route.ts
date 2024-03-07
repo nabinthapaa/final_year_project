@@ -22,7 +22,8 @@ export async function GET(req: Request, { params }: {params: {id: number}}){
         }
         return NextResponse.json({
             data: payload,
-            status: 401
+            status: 401,
+            doctor: true
         })
     }
     catch (error) {

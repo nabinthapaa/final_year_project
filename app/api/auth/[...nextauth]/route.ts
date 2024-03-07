@@ -99,7 +99,6 @@ export const authOptions: AuthOptions = {
             }
             token.id = user._id
           }
-        console.log('token',token)
         return token;
       } catch (error) {
         console.error("JWT Callback Error:", error);
