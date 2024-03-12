@@ -58,10 +58,18 @@ function CheckSymptoms() {
             const formData = new FormData();
             formData.set("symptoms", JSON.stringify(selectedOption));
             const res = await axios.post(BASE_URL + PREDICT, formData);
-            setResult(res.data);
+            if(res.status === 200) setResult(res.data);
+            else if(res.status === 202) {
+                alert('select at least 3 symptoms')
+            }
+
             document.cookie=`suspectedDisease=${res.data.predicteddisease}`
         } catch (error) {
             if (error instanceof Error) {
+                console.log(error)
+                if(error.response.status === 422) {
+                    alert('system is unable to predict disease')
+                }
                 console.log(error.message);
             }
         }
