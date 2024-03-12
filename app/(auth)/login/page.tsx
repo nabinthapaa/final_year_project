@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/components/Loader";
+import Toast from "@/components/Toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
@@ -23,6 +24,7 @@ function LoginPage() {
   const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading ] = useState(false);
+  const [isError, setIsError ] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,20 +41,25 @@ function LoginPage() {
       });
       if (res?.ok) router.replace("/profile");
       if (res?.error) {
-        alert("Invalid Credentials");
-        return;
+        setIsError(true);
+        await new Promise(resolve =>  setTimeout(resolve, 1500));
       }
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
       }
     }finally{
+      setIsError(false)
         setLoading(false);
     }
   };
 
   if (session) router.replace("/profile");
   return (
+  <>
+  <Toast show={isError}>
+    Invalid credentials
+  </Toast>
     <form
       className="max-w-[650px] min-w-[300px] px-10 mx-auto space-y-4 my-[30px]"
       onSubmit={handleSubmit}
@@ -98,6 +105,7 @@ function LoginPage() {
       <span className="">{loading?"Logging in.." : "Log in"}</span>
       </button>
     </form>
+    </>
   );
 }
 

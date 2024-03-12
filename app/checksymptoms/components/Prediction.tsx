@@ -23,9 +23,15 @@ export default function Prediction({
           </p>
           <p>
             Predicted Disease: <span>{predicteddisease}</span>
+            <span className="text-sm block">Know more about disease here at {" "}
+              <Link
+                href={`https://search.nih.gov/search?utf8=%E2%9C%93&affiliate=nih&query=${predicteddisease}`}
+                target="_blank"
+                className="underline text-blue-300"
+              >NIH</Link></span>
           </p>
           <p>
-            Department:{" "}
+            Specialiazation:{" "}
             <Link href={`/suggested-doctor?dept=${consultdoctor}`}>
               {consultdoctor}
             </Link>
